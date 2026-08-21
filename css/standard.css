@@ -1,0 +1,18 @@
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    padding: 0; 
+}
+
+:root {
+    --page-max-width: 1920px;
+    --content-max-width: 1440px;
+}
+
+main {
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+}
