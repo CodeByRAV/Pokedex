@@ -1,0 +1,36 @@
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #FFD758;
+}
+
+header {
+    background-color: #218DAE;
+    display: flex;
+    height: 100px;
+    color: #FFFFFF;
+}
+
+nav {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    padding-left: 40px;
+}
+
+main {
+    flex: 1;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    height: 100px;
+    text-align: center;
+}
+
+.pokeball {
+    height: 44px;
+    width: auto;
+}
