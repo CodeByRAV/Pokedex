@@ -17,6 +17,8 @@ function renderPokemonCards() {
     for (let iPkm = 0; iPkm < allPkm.length; iPkm++) {
         document.getElementById('pokemon-container').innerHTML += getTemplatePokemonCard(iPkm);
         
-        renderPokemonCards();
+
     }
+    
+    return renderPokemonCards();
 }
