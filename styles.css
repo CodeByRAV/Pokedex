@@ -10,6 +10,7 @@ header {
     display: flex;
     height: 100px;
     color: #FFFFFF;
+    margin-bottom: 46px;
 }
 
 nav {
@@ -33,4 +34,18 @@ footer {
 .pokeball {
     height: 44px;
     width: auto;
+}
+
+.pokedex {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.pokemon-card {
+    background-color: pink;
+    height: 350px;
+    width: 250px;
+    border-radius: 15px;
 }
