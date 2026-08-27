@@ -11,12 +11,11 @@ async function loadPokemon(path="") {
     let response = await fetch(baseUrl +path)
     let responseToJson = await response.json();
     console.table(responseToJson.results);
-    allPkm.push(responseToJson.results);
 } 
 
 function renderPokemonCards() {
-    for (let index = 0; index < allPkm.length; index++) {
-        document.getElementById('pokemon-container').innerHTML += getTemplatePokemonCard();
+    for (let iPkm = 0; iPkm < allPkm.length; iPkm++) {
+        document.getElementById('pokemon-container').innerHTML += getTemplatePokemonCard(iPkm);
         
         renderPokemonCards();
     }
