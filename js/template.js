@@ -1,8 +1,9 @@
 function getTemplatePokemonCard(iPkm) {
     return `
     <div class="pokemon-card ${allPkmDetails[iPkm].types[0].type.name}">
-        <h1>${allPkm[iPkm].name}</h1>
+        <div class="pokemon-name"><h1>${allPkm[iPkm].name}</h1></div>
         <img class="poke-img" src="${allPkmDetails[iPkm].sprites["front_default"]}"></img>
-        <img></img>
+        <div class="type-icons"></div>
     </div>`
 }
+
