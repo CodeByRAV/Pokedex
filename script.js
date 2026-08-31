@@ -26,6 +26,7 @@ async function renderPokemonCards() {
         console.log(responseToJson)
         allPkmDetails.push(responseToJson);
         document.getElementById('pokemon-container').innerHTML += getTemplatePokemonCard(iPkm);
-        console.log(allPkmDetails);
+        
     }
+    console.log(allPkmDetails);
 }

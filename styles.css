@@ -39,8 +39,13 @@ footer {
 .pokedex {
     display: flex;
     gap: 18px;
+}
+
+.pokemon-container {
+    display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    justify-content: center;
+    align-items: center;
 }
 
 .pokemon-card {
@@ -52,9 +57,30 @@ footer {
     height: 350px;
     width: 250px;
     border-radius: 15px;
+    margin: 20px;
 }
 
 .poke-img {
     height:  60%;
     width: auto;
+}
+
+.grass {
+    background-color: green;
+}
+
+.fire {
+    background-color: red;
+}
+
+.water {
+    background-color:#218DAE;
+}
+
+.bug {
+    background-color: burlywood;
+}
+
+.normal {
+    background-color: gray;
 }
