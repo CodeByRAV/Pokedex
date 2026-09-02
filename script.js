@@ -31,7 +31,8 @@ async function renderPokemonCards() {
         let response = await fetch(allPkm[iPkm].url)
         let responseToJson = await response.json();
         allPkmDetails.push(responseToJson);
-        document.getElementById('pokemon-container').innerHTML += getTemplatePokemonCard(iPkm, pokeName);
+        document.getElementById('pokemon-container').innerHTML += await getTemplatePokemonCard(iPkm, pokeName);
     }
     console.log(allPkmDetails);
 }
+
