@@ -98,3 +98,14 @@ footer {
     text-align: center;
     background-color: #272A35;
 }
+
+.type-icons {
+    padding: 8px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.type-icons img {
+    height: 20px;
+    width: auto;
+}
