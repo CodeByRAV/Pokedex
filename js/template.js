@@ -1,11 +1,11 @@
 async function getTemplatePokemonCard(iPkm, pokeName) {
     return `
-    <div class="pokemon-card ${allPkmDetails[iPkm].types[0].type.name}">
+    <button class="pokemon-card ${allPkmDetails[iPkm].types[0].type.name}" onclick="openDialog(event, ${iPkm})">
         <div class="pokemon-name"><h1>${pokeName}</h1></div>
         <img class="poke-img" src="${allPkmDetails[iPkm].sprites["front_default"]}"></img>
         <div class="type-icons">
         ${await getTemplateTypeIcons(iPkm)}</div>
-    </div>`
+    </button>`
 }
 
 async function getTemplateTypeIcons(iPkm) {
@@ -23,4 +23,19 @@ async function getTemplateTypeIcons(iPkm) {
    typeIcons += `
     <img src="${pokeTypeIcon}"></img>
     `}  return typeIcons; 
+}
+
+function getTemplatePokemonDialog(iPkm) {
+    return `
+        <div class="pokemon-dialog">
+            <h1>${allPkmDetails[iPkm].name}</h1> <img src="./assets/icon/close.svg"></img>
+
+            <div class="pokemon-dialog-tabs">
+                <button>Main information</button>
+                <button>Stats</button>
+                <button>Evolutions</button>
+            </div>
+
+        </div>
+    `;
 }
