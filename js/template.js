@@ -69,7 +69,7 @@ async function getTemplatePokemonDialog(iPkm) {
                     <button onclick="getTemplateEvo(${iPkm})">Evolutions</button>
                 </div> 
                 <div id="dialog-info">
-                ${await getDialogTable(iPkm)};
+                ${await getDialogTable(iPkm)}
                 </div>
             </div>`;
 }
