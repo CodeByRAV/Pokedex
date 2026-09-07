@@ -23,7 +23,10 @@
 
 }
 
-.dialog-header img {
+.dialog-header button {
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
     position: absolute;
     right: 15px;
 }
@@ -35,13 +38,11 @@
 }
 
 .poke-img-dialog {
-    
     justify-self: center;
     align-items: center;
 }
 
-.dialog button {
-    background-color: transparent;
-    cursor: pointer;
-    border: none;
+.poke-img-dialog img {
+    height: 300px;
+    width: auto;
 }
