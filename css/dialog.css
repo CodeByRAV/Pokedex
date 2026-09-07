@@ -33,8 +33,20 @@
 
 .pokemon-dialog-tabs {
     display: flex;
-    justify-content: center;
-    margin-top: 12px;
+    justify-content: space-between;
+    margin-top: 20px;
+    gap: 8px;
+}
+
+.pokemon-dialog-tabs button {
+    background-color: rgb(39, 42, 53);
+    border-radius: 12px;
+    padding: 3px 5px 3px 5px;
+    cursor: pointer;
+    border: none;
+    color: white;
+    width: calc(100%/3);
+
 }
 
 .poke-img-dialog {
@@ -43,6 +55,17 @@
 }
 
 .poke-img-dialog img {
-    height: 300px;
+    height: 280px;
     width: auto;
+}
+
+.stats-table {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-around;
+    color: white;
+}
+
+#dialog-info {
+    margin-bottom: 0;
 }

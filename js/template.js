@@ -19,15 +19,37 @@ async function getTemplateTypeIcons(iPkm) {
         let generation = Object.keys(responseToJson.sprites)[0];
         let game = Object.keys(responseToJson.sprites[generation])[0];
         let pokeTypeIcon = responseToJson.sprites[generation][game].name_icon;
-        
-   typeIcons += `
+
+        typeIcons += `
     <img src="${pokeTypeIcon}"></img>
-    `}  return typeIcons; 
+    `} return typeIcons;
 }
 
-    async function getTemplatePokemonDialog(iPkm) {
-        let pokeName = formatPokemonName(allPkm[iPkm].name)
-        return `
+async function getDialogTable(iPkm) {
+        return `                
+                <table class="stats-table">
+                    <tr>
+                        <td>Height:</td>
+                        <td>Cell B</td>
+                    </tr>
+                    <tr>
+                        <td>Weight:</td>
+                        <td>Cell D</td>
+                    </tr>
+                    <tr>
+                        <td>Base XP:</td>
+                        <td>Cell D</td>
+                    </tr>
+                    <tr>
+                        <td>Abilities:</td>
+                        <td>Cell D</td>
+                    </tr>
+                </table>`;
+}
+
+async function getTemplatePokemonDialog(iPkm) {
+    let pokeName = formatPokemonName(allPkm[iPkm].name)
+    return `
             <div class="pokemon-dialog">
                 <div class="dialog-header">
                     <h1>${pokeName}</h1>
@@ -45,11 +67,22 @@ async function getTemplateTypeIcons(iPkm) {
                     <button onclick="getTemplateInfo(${iPkm})">Main</button>
                     <button onclick="getTemplateStats(${iPkm})">Stats</button>
                     <button onclick="getTemplateEvo(${iPkm})">Evolutions</button>
+                </div> 
+                <div id="dialog-info">
+                ${await getDialogTable(iPkm)};
                 </div>
             </div>`;
-    }
+}
 
-async function getTemplateMainInfo(iPkm) {
-    console.log(InfoWorking)
+async function getTemplateInfo(iPkm) {
+    console.log('InfoWorking');
+    document.getElementById('dialog-info').innerHTML = await getDialogTable(iPkm);
+}
 
+async function getTemplateStats(iPkm) {
+    console.log('StatsWorking');
+}
+
+async function getTemplateEvo(iPkm) {
+    console.log('EvoWorking');
 }
