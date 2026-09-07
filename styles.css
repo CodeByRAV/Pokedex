@@ -26,8 +26,11 @@ main {
 
 footer {
     display: flex;
+    background-color: rgb(39, 42, 53);
     justify-content: center;
+    align-items: center;
     height: 100px;
+    margin-top: 24px;
     text-align: center;
 }
 
@@ -96,6 +99,7 @@ footer {
     box-sizing: border-box;
     width: 100%;
     text-align: center;
+    border-radius: 12px;
     background-color: #272A35;
 }
 
@@ -103,6 +107,7 @@ footer {
     padding: 8px;
     display: flex;
     justify-content: space-evenly;
+    border-radius: 12px;
 }
 
 .type-icons img {

@@ -1,0 +1,47 @@
+.pokemon-dialog {
+    background-color: rgb(25, 56, 87);
+}
+
+#pokemon-dialog {
+    background-color: rgb(25, 56, 87);
+    width: 400px;
+    min-height: 500px;
+    border-radius: 15px;
+}
+
+#pokemon-dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.dialog-header {
+    background-color: #272A35;
+    border-radius: 12px;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.dialog-header img {
+    position: absolute;
+    right: 15px;
+}
+
+.pokemon-dialog-tabs {
+    display: flex;
+    justify-content: center;
+    margin-top: 12px;
+}
+
+.poke-img-dialog {
+    
+    justify-self: center;
+    align-items: center;
+}
+
+.dialog button {
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
+}
