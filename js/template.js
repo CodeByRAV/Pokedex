@@ -25,20 +25,20 @@ async function getTemplateTypeIcons(iPkm) {
     `} return typeIcons;
 }
 
-async function getDialogTable(iPkm) {
+function getDialogTable(iPkm) {
         return `                
                 <table class="stats-table">
                     <tr>
                         <td>Height:</td>
-                        <td>Cell B</td>
+                        <td>${allPkmDetails[iPkm].height/10 +" m"}</td>
                     </tr>
                     <tr>
                         <td>Weight:</td>
-                        <td>Cell D</td>
+                        <td>${allPkmDetails[iPkm].weight/10 +" kg"}</td>
                     </tr>
                     <tr>
                         <td>Base XP:</td>
-                        <td>Cell D</td>
+                        <td>${allPkmDetails[iPkm].base_experience}</td>
                     </tr>
                     <tr>
                         <td>Abilities:</td>
@@ -89,9 +89,9 @@ async function getTemplatePokemonDialog(iPkm) {
             </div>`;
 }
 
-async function getTemplateInfo(iPkm) {
+function getTemplateInfo(iPkm) {
     console.log('InfoWorking');
-    document.getElementById('dialog-info').innerHTML = await getDialogTable(iPkm);
+    document.getElementById('dialog-info').innerHTML = getDialogTable(iPkm);
 }
 
 async function getTemplateEvo(iPkm) {
