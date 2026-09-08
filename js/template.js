@@ -53,7 +53,11 @@ function getAbilities(iPkm) {
     
     for (let iAbility = 0; iAbility < allPkmDetails[iPkm].abilities.length; iAbility++) {
         let ability = allPkmDetails[iPkm].abilities[iAbility].ability.name;
-        abilities += ability + ", ";
+        abilities += ability;
+
+        if (iAbility < allPkmDetails[iPkm].abilities.length - 1) {
+            abilities += ", ";
+        }
     }
 
     return abilities;
