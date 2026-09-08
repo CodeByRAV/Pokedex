@@ -42,9 +42,21 @@ async function getDialogTable(iPkm) {
                     </tr>
                     <tr>
                         <td>Abilities:</td>
-                        <td>Cell D</td>
+                        <td>${getAbilities(iPkm)}</td>
                     </tr>
                 </table>`;
+}
+
+function getAbilities(iPkm) {
+
+    let abilities = "";
+    
+    for (let iAbility = 0; iAbility < allPkmDetails[iPkm].abilities.length; iAbility++) {
+        let ability = allPkmDetails[iPkm].abilities[iAbility].ability.name;
+        abilities += ability + ", ";
+    }
+
+    return abilities;
 }
 
 async function getTemplatePokemonDialog(iPkm) {
@@ -65,7 +77,6 @@ async function getTemplatePokemonDialog(iPkm) {
                 </div>
                 <div class="pokemon-dialog-tabs">
                     <button onclick="getTemplateInfo(${iPkm})">Main</button>
-                    <button onclick="getTemplateStats(${iPkm})">Stats</button>
                     <button onclick="getTemplateEvo(${iPkm})">Evolutions</button>
                 </div> 
                 <div id="dialog-info">
@@ -79,10 +90,7 @@ async function getTemplateInfo(iPkm) {
     document.getElementById('dialog-info').innerHTML = await getDialogTable(iPkm);
 }
 
-async function getTemplateStats(iPkm) {
-    console.log('StatsWorking');
-}
-
 async function getTemplateEvo(iPkm) {
     console.log('EvoWorking');
+    document.getElementById('dialog-info').innerHTML = "";
 }
