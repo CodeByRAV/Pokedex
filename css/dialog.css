@@ -68,4 +68,6 @@
 
 #dialog-info {
     margin-bottom: 0;
+    display: flex;
+    justify-content: space-around;
 }

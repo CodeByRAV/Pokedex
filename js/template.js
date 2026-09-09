@@ -98,12 +98,14 @@ async function getTemplateEvo(iPkm) {
     console.log('EvoWorking');
     let secondEvo = await loadEvolvedPokemon(iPkm);
     let firstEvo = await loadEvolvedFrom(iPkm);
+    let finalEvo = await loadFinalEvolution(iPkm);
     console.log('EvolvedPokemon', secondEvo);
     document.getElementById('dialog-info').innerHTML = `
     <div class="evolution-chain">
         <div class="evolution-chain-cards">
         <img src="${firstEvo}"></img>
         <img src="${secondEvo}"></img>
+        <img src="${finalEvo}"></img>
         </div>
     </div>`;
 }
@@ -139,4 +141,20 @@ async function loadEvolvedFrom(iPkm) {
     let evofirstformSprite = evofirstformResponseToJson.sprites["front_default"];
     console.log(evofirstformSprite);
     return evofirstformSprite;
+}
+
+async function loadFinalEvolution(iPkm) {
+    let evoChainURL = allPkmDetails[iPkm].species.url;
+    let response = await fetch(evoChainURL);
+    let responseToJson = await response.json();
+    let evoChainInfo = responseToJson.evolution_chain.url;
+    let evoResponse = await fetch(evoChainInfo);
+    let evoResponseToJson = await evoResponse.json();
+    let evoChain = evoResponseToJson.chain;
+    let finalEvo = evoChain.evolves_to[0].evolves_to[0].species.name;
+    let finalEvoResponse = await fetch(baseUrl + "pokemon/" + finalEvo);
+    let finalEvoResponseToJson = await finalEvoResponse.json();
+    let finalEvoSprite = finalEvoResponseToJson.sprites["front_default"];
+    console.log(finalEvoSprite);
+    return finalEvoSprite;
 }
