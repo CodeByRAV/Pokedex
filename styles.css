@@ -114,3 +114,7 @@ footer {
     height: 20px;
     width: auto;
 }
+
+#pokemon-names {
+    display: none;
+}

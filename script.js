@@ -1,10 +1,15 @@
 let allPkm = [];
 let allPkmDetails =[];
 let pokemon = "pokemon?limit=20&offset=0";
+let allNames = [];
+let currentNames = [];
 
 async function init() {
+
 console.log("Init is Running")
 await loadPokemon(pokemon);
+currentNames = allNames;
+renderNames();
 await renderPokemonCards();
 }
 
@@ -16,6 +21,10 @@ async function loadPokemon(path="") {
     console.table(responseToJson.results);
     allPkm = responseToJson.results
     console.log(allPkm);
+    for (let i = 0; i <allPkm.length; i++) {
+        allNames.push(allPkm[i].name);
+    }
+    console.log(allNames);
 } 
 
 function formatPokemonName(name) {
@@ -34,5 +43,11 @@ async function renderPokemonCards() {
         document.getElementById('pokemon-container').innerHTML += await getTemplatePokemonCard(iPkm, pokeName);
     }
     console.log(allPkmDetails);
+}
+
+function renderNames() {
+for (let i = 0; i < currentNames.length; i++) {
+document.getElementById('pokemon-names').innerHTML += `${currentNames[i]}`
+}
 }
 
