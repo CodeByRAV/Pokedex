@@ -6,12 +6,9 @@ let allNames = [];
 let currentNames = [];
 
 async function init() {
-
 console.log("Init is Running")
 await loadPokemon(pokemon);
 await loadPokemonNamesOnly(noPLimit);
-currentNames = allNames;
-renderNames();
 await renderPokemonCards();
 }
 
@@ -60,3 +57,15 @@ document.getElementById('pokemon-names').innerHTML += `${currentNames[i]}`
 }
 }
 
+async function filterAndShowNames(filterWord) {
+    currentNames = allNames.filter(name => name.includes(filterWord.toLowerCase()));
+    document.getElementById('pokemon-container').innerHTML = '';
+    for (let iPkm = 0; iPkm < currentNames.length; iPkm++) {
+        let pokeName = formatPokemonName(currentNames[iPkm]);
+        let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${currentNames[iPkm]}`)
+        let responseToJson = await response.json();
+        allPkmDetails.push(responseToJson);
+        document.getElementById('pokemon-container').innerHTML += await getTemplatePokemonCard(iPkm, pokeName);
+    }
+    renderPokemonCards();
+}
