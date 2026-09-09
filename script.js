@@ -58,6 +58,7 @@ document.getElementById('pokemon-names').innerHTML += `${currentNames[i]}`
 }
 
 async function filterAndShowNames(filterWord) {
+    allPkmDetails = [];
     currentNames = allNames.filter(name => name.includes(filterWord.toLowerCase()));
     document.getElementById('pokemon-container').innerHTML = '';
     for (let iPkm = 0; iPkm < currentNames.length; iPkm++) {
@@ -67,5 +68,4 @@ async function filterAndShowNames(filterWord) {
         allPkmDetails.push(responseToJson);
         document.getElementById('pokemon-container').innerHTML += await getTemplatePokemonCard(iPkm, pokeName);
     }
-    renderPokemonCards();
 }
