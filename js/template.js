@@ -16,13 +16,23 @@ async function getTemplateTypeIcons(iPkm) {
         let response = await fetch(pokeTypeIconURL);
         let responseToJson = await response.json();
 
-        let generation = Object.keys(responseToJson.sprites)[0];
-        let game = Object.keys(responseToJson.sprites[generation])[0];
-        let pokeTypeIcon = responseToJson.sprites[generation][game].name_icon;
-
+        let generations = Object.keys(responseToJson.sprites);
+        let generation = "";
+        let pokeTypeIcon = "";
+          
+        for (let i in generations) {
+            let game = Object.keys(responseToJson.sprites[generations[i]])[0];
+            if (responseToJson.sprites[generations[i]][game].name_icon !== null) {
+                    generation = Object.keys(responseToJson.sprites)[i];
+                    pokeTypeIcon = responseToJson.sprites[generation][game].name_icon;
+                    break;
+            } 
+        }
         typeIcons += `
     <img src="${pokeTypeIcon}"></img>
-    `} return typeIcons;
+    `} 
+
+        return typeIcons;
 }
 
 function getDialogTable(iPkm) {

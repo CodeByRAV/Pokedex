@@ -69,3 +69,4 @@ async function filterAndShowNames(filterWord) {
         document.getElementById('pokemon-container').innerHTML += await getTemplatePokemonCard(iPkm, pokeName);
     }
 }
+    
