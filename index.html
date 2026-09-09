@@ -22,15 +22,17 @@
 
 <body onload="init()">
     <header>
-        <nav>
+        <div class="logo">
             <h1>Pokedex</h1>
             <img class="pokeball" src="./assets/icon/pokeball.svg"></img>
+        </div>
+        <nav>
+             <input id="search-input" type="text" placeholder="Search Pokemon...">
         </nav>
     </header>
     <main>
         <section id="pokemon-list" class="pokedex">
             <div id="pokemon-names"></div>
-            <!-- Pokemon list will be dynamically generated here -->
             <dialog id="pokemon-dialog">
                 <div id="pokemon-dialog-content"></div>
             </dialog>

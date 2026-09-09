@@ -8,16 +8,19 @@ body {
 header {
     background-color: #272A35;
     display: flex;
+    justify-content: space-between;
     height: 100px;
     color: #FFFFFF;
     margin-bottom: 46px;
+    padding: 0 40px 0 40px;
 }
 
 nav {
     display: flex;
+    justify-content: space-between;
     gap: 15px;
     align-items: center;
-    padding-left: 40px;
+   
 }
 
 main {
@@ -117,4 +120,11 @@ footer {
 
 #pokemon-names {
     display: none;
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }

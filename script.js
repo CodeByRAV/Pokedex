@@ -1,6 +1,7 @@
 let allPkm = [];
 let allPkmDetails =[];
 let pokemon = "pokemon?limit=20&offset=0";
+let noPLimit = "pokemon?limit=100000&offset=0";
 let allNames = [];
 let currentNames = [];
 
@@ -8,6 +9,7 @@ async function init() {
 
 console.log("Init is Running")
 await loadPokemon(pokemon);
+await loadPokemonNamesOnly(noPLimit);
 currentNames = allNames;
 renderNames();
 await renderPokemonCards();
@@ -21,11 +23,18 @@ async function loadPokemon(path="") {
     console.table(responseToJson.results);
     allPkm = responseToJson.results
     console.log(allPkm);
-    for (let i = 0; i <allPkm.length; i++) {
-        allNames.push(allPkm[i].name);
+
+} 
+
+async function loadPokemonNamesOnly(path="") {
+    let response = await fetch(baseUrl + path)
+    let responseToJson = await response.json();
+    let allPkmNoLimit = responseToJson.results
+    for (let i = 0; i <allPkmNoLimit.length; i++) {
+        allNames.push(allPkmNoLimit[i].name);
     }
     console.log(allNames);
-} 
+}
 
 function formatPokemonName(name) {
     let formattedName = name.charAt(0).toUpperCase() +
