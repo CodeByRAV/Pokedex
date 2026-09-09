@@ -96,5 +96,30 @@ function getTemplateInfo(iPkm) {
 
 async function getTemplateEvo(iPkm) {
     console.log('EvoWorking');
-    document.getElementById('dialog-info').innerHTML = "";
+    let evolvedPokemon = await loadEvolvedPokemon(iPkm);
+    console.log('EvolvedPokemon', evolvedPokemon);
+    document.getElementById('dialog-info').innerHTML = `
+    <div class="evolution-chain">
+        <div class="evolution-chain-cards">
+        <img src="${allPkmDetails[iPkm].sprites["front_default"]}"></img>
+        <img src="${evolvedPokemon}"></img>
+        </div>
+    </div>`;
+}
+
+async function loadEvolvedPokemon(iPkm) {
+    let evoChainURL = allPkmDetails[iPkm].species.url;
+    let response = await fetch(evoChainURL);
+    let responseToJson = await response.json();
+    let evoChainInfo = responseToJson.evolution_chain.url;
+    let evoResponse = await fetch(evoChainInfo);
+    let evoResponseToJson = await evoResponse.json();
+    let evoChain = evoResponseToJson.chain;
+    console.log(evoChain);
+    let evolvedTo = evoChain.evolves_to[0].species.name;
+    let evolvedToResponse = await fetch(baseUrl + "pokemon/" + evolvedTo);
+    let evolvedToResponseToJson = await evolvedToResponse.json();
+    let evolvedToSprite = evolvedToResponseToJson.sprites["front_default"];
+    console.log(evolvedToSprite);
+    return evolvedToSprite;
 }
