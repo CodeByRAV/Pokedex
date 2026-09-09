@@ -92,6 +92,40 @@ footer {
     background-color: gray;
 }
 
+.ghost {
+    background-color: #6B5FC9;
+}
+
+/* 7C12A8 */
+
+.electric {
+    background-color: #F9D71C;
+}
+
+.ground {
+    background-color: #E2BF65;
+}
+
+.poison {
+    background-color: #A63FA6;
+}
+
+.psychic {
+    background-color: #F95C9C;
+}
+
+.rock {
+    background-color: #C9B16B;
+}
+
+.steel {
+    background-color: #C9C9D1;
+}
+
+.ice {
+    background-color: #5CC9D1;
+}
+
 .type-icons {
     box-sizing: border-box;
     width: 100%;
