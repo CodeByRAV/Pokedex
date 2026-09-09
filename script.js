@@ -69,4 +69,20 @@ async function filterAndShowNames(filterWord) {
         document.getElementById('pokemon-container').innerHTML += await getTemplatePokemonCard(iPkm, pokeName);
     }
 }
-    
+
+async function loadMorePokemon() {
+    let currentCount = allPkm.length;
+    let newCount = currentCount + 20;
+    let response = await fetch (baseUrl + `pokemon?limit=${newCount}&offset=${newCount}`);
+    let responseToJson = await response.json();
+    allPkm = responseToJson.results;
+    document.getElementById('pokemon-container').innerHTML = '';
+    for (let iPkm = 0; iPkm < allPkm.length; iPkm++) {
+        let pokeName = formatPokemonName(allPkm[iPkm].name);
+        let response = await fetch(allPkm[iPkm].url)
+        let responseToJson = await response.json();
+        allPkmDetails.push(responseToJson);
+        document.getElementById('pokemon-container').innerHTML += await getTemplatePokemonCard(iPkm, pokeName);
+    }
+    console.log(allPkmDetails);
+}

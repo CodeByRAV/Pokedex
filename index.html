@@ -32,11 +32,17 @@
     </header>
     <main>
         <section id="pokemon-list" class="pokedex">
-            <div id="pokemon-names"></div>
+            <div id="pokemon-names">
+            </div>
             <dialog id="pokemon-dialog">
                 <div id="pokemon-dialog-content"></div>
             </dialog>
-            <div id="pokemon-container" class="pokemon-container">
+            <div class="load-more-wrapper">
+                <div id="pokemon-container" class="pokemon-container">
+                </div>
+                <div class="load-more" id="load-more-container">
+                    <button id="load-more-button" onclick="loadMorePokemon()">Load More</button>
+                </div>
             </div>
         </section>
     </main>
