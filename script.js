@@ -7,12 +7,32 @@ let currentNames = [];
 
 async function init() {
 console.log("Init is Running")
-await loadPokemon(pokemon);
+await loadAndShowPokemon();
 await loadPokemonNamesOnly(noPLimit);
-await renderPokemonCards();
 }
 
 const baseUrl = "https://pokeapi.co/api/v2/"
+
+async function loadAndShowPokemon() {
+    showLoadingSpinner();
+    await loadPokemon(pokemon);
+    setTimeout(hideLoadingSpinner, 3000);
+    setTimeout(renderPokemonCards, 3000);
+    
+}
+
+function showLoadingSpinner() {
+    document.getElementById('pokemon-container').innerHTML = `
+    <div class="loading-spinner">
+        <div class="spinner"><img src="./assets/icon/pokeball.svg" alt="Loading..."></div>
+        <p>Loading...</p>
+    </div>`;
+}
+
+function hideLoadingSpinner() {
+    document.getElementById('pokemon-container').innerHTML = '';
+    
+}
 
 async function loadPokemon(path="") {
     let response = await fetch(baseUrl + path)

@@ -126,6 +126,10 @@ footer {
     background-color: #5CC9D1;
 }
 
+.fighting {
+    background-color: #C94B3F;
+}
+
 .type-icons {
     box-sizing: border-box;
     width: 100%;
@@ -181,3 +185,29 @@ footer {
     align-items: center;
     gap: 10px;
 }
+
+.loading-spinner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content:center;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    font-size: 32px;
+}
+.spinner {
+    width: 260px;
+    height: 260px;
+    animation: spin 3s linear;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(820deg); }
+}
+
