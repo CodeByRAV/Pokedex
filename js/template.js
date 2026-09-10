@@ -74,7 +74,7 @@ function getAbilities(iPkm) {
 }
 
 async function getTemplatePokemonDialog(iPkm) {
-    let pokeName = formatPokemonName(allPkm[iPkm].name)
+    let pokeName = formatPokemonName(allPkmDetails[iPkm].name); console.log(allPkm[iPkm].name);
     return `
             <div class="pokemon-dialog">
                 <div class="dialog-header">
