@@ -72,12 +72,11 @@ async function filterAndShowNames(filterWord) {
 
 async function loadMorePokemon() {
     let currentCount = allPkm.length;
-    let newCount = currentCount + 20;
-    let response = await fetch (baseUrl + `pokemon?limit=${newCount}&offset=${newCount}`);
+    let response = await fetch (baseUrl + `pokemon?limit=20&offset=${currentCount}`);
     let responseToJson = await response.json();
-    allPkm = responseToJson.results;
-    document.getElementById('pokemon-container').innerHTML = '';
-    for (let iPkm = 0; iPkm < allPkm.length; iPkm++) {
+    console.log(...responseToJson.results);
+    allPkm.push(...responseToJson.results);
+    for (let iPkm = currentCount; iPkm < allPkm.length; iPkm++) {
         let pokeName = formatPokemonName(allPkm[iPkm].name);
         let response = await fetch(allPkm[iPkm].url)
         let responseToJson = await response.json();
