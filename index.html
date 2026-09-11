@@ -27,7 +27,7 @@
             <img class="pokeball" src="./assets/icon/pokeball.svg"></img>
         </div>
         <nav>
-             <input id="search-input" type="text" placeholder="Search Pokemon..." oninput="filterAndShowNames(this.value)">
+             <input id="search-input" type="text" placeholder="Search Pokemon..." onkeydown="if (event.keyCode === 13) {filterAndShowNames(this.value)}"> <button id="search-button" onclick="filterAndShowNames(document.getElementById('search-input').value)">Search</button>
         </nav>
     </header>
     <main>
