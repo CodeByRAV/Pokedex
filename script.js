@@ -16,8 +16,8 @@ const baseUrl = "https://pokeapi.co/api/v2/"
 async function loadAndShowPokemon() {
     showLoadingSpinner();
     await loadPokemon(pokemon);
-    setTimeout(hideLoadingSpinner, 3000);
-    setTimeout(renderPokemonCards, 3000);
+    setTimeout(hideLoadingSpinner, 2000);
+    setTimeout(renderPokemonCards, 2000);
     
 }
 
@@ -31,7 +31,7 @@ function showLoadingSpinner() {
 
 function hideLoadingSpinner() {
     document.getElementById('pokemon-container').innerHTML = '';
-    
+
 }
 
 async function loadPokemon(path="") {

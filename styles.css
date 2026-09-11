@@ -197,13 +197,13 @@ footer {
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
-    font-size: 32px;
+    font-size: 22px;
 }
 .spinner {
-    width: 260px;
-    height: 260px;
-    animation: spin 3s linear;
-    margin: 20px auto;
+    width: 90px;
+    height: 90px;
+    animation: spin 2s linear;
+    margin: 0px auto;
 }
 
 @keyframes spin {
