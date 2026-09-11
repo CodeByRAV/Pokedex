@@ -23,3 +23,9 @@ async function openPokemonDialog(iPkm) {
     document.getElementById("pokemon-dialog-content").innerHTML = dialogContent;
     openDialog();
 }
+
+dialogRef.addEventListener('click', (event) => {
+    if (event.target.id !== 'my-div') {
+        dialogRef.close();
+    }
+});
