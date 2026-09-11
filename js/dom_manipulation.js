@@ -25,7 +25,7 @@ async function openPokemonDialog(iPkm) {
 }
 
 dialogRef.addEventListener('click', (event) => {
-    if (event.target.id !== 'my-div') {
+    if (event.target === dialogRef) {
         dialogRef.close();
     }
 });
