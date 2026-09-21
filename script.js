@@ -33,11 +33,13 @@ function showLoadingSpinner() {
         <div class="spinner"><img src="./assets/icon/pokeball.svg" alt="Loading..."></div>
         <p>Loading...</p>
     </div>`;
+    document.body.style.overflow = 'hidden';
 }
 
 function hideLoadingSpinner() {
     document.getElementById('spinner').classList.add('d-none');
     document.getElementById('load-more-button').classList.remove('d-none');
+    document.body.style.overflow = 'auto';
 }
 
 async function loadPokemon(path="") {
