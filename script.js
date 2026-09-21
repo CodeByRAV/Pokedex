@@ -15,14 +15,20 @@ const baseUrl = "https://pokeapi.co/api/v2/"
 
 async function loadAndShowPokemon() {
     showLoadingSpinner();
-    await loadPokemon(pokemon);
-    setTimeout(hideLoadingSpinner, 2000);
-    setTimeout(renderPokemonCards, 2000);
-    
+
+    try {
+      await loadPokemon(pokemon);
+      await renderPokemonCards();
+    } catch (exceptionVar) {
+      console.log("error");
+    } finally {
+      hideLoadingSpinner();
+    }    
 }
 
 function showLoadingSpinner() {
-    document.getElementById('pokemon-container').innerHTML = `
+    document.getElementById('load-more-button').classList.add('d-none');
+    document.getElementById('spinner').innerHTML = `
     <div class="loading-spinner">
         <div class="spinner"><img src="./assets/icon/pokeball.svg" alt="Loading..."></div>
         <p>Loading...</p>
@@ -30,8 +36,8 @@ function showLoadingSpinner() {
 }
 
 function hideLoadingSpinner() {
-    document.getElementById('pokemon-container').innerHTML = '';
-
+    document.getElementById('spinner').classList.add('d-none');
+    document.getElementById('load-more-button').classList.remove('d-none');
 }
 
 async function loadPokemon(path="") {

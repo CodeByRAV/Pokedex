@@ -5,6 +5,10 @@ body {
     background-color: rgb(25,56,87);
 }
 
+.d-none {
+    display: none; 
+}
+
 header {
     background-color: #272A35;
     display: flex;
@@ -202,12 +206,12 @@ footer {
 .spinner {
     width: 90px;
     height: 90px;
-    animation: spin 2s linear;
+    animation: spin 2s linear infinite;
     margin: 0px auto;
 }
 
 @keyframes spin {
     0% { transform: rotate(0deg); }
-    100% { transform: rotate(820deg); }
+    100% { transform: rotate(720deg); }
 }
 
