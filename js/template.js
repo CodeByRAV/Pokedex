@@ -19,32 +19,32 @@ async function getTemplateTypeIcons(iPkm) {
         let generations = Object.keys(responseToJson.sprites);
         let generation = "";
         let pokeTypeIcon = "";
-          
+
         for (let i in generations) {
             let game = Object.keys(responseToJson.sprites[generations[i]])[0];
             if (responseToJson.sprites[generations[i]][game].name_icon !== null) {
-                    generation = Object.keys(responseToJson.sprites)[i];
-                    pokeTypeIcon = responseToJson.sprites[generation][game].name_icon;
-                    break;
-            } 
+                generation = Object.keys(responseToJson.sprites)[i];
+                pokeTypeIcon = responseToJson.sprites[generation][game].name_icon;
+                break;
+            }
         }
         typeIcons += `
     <img src="${pokeTypeIcon}"></img>
-    `} 
+    `}
 
-        return typeIcons;
+    return typeIcons;
 }
 
 function getDialogTable(iPkm) {
-        return `                
+    return `                
                 <table class="stats-table">
                     <tr>
                         <td>Height:</td>
-                        <td>${allPkmDetails[iPkm].height/10 +" m"}</td>
+                        <td>${allPkmDetails[iPkm].height / 10 + " m"}</td>
                     </tr>
                     <tr>
                         <td>Weight:</td>
-                        <td>${allPkmDetails[iPkm].weight/10 +" kg"}</td>
+                        <td>${allPkmDetails[iPkm].weight / 10 + " kg"}</td>
                     </tr>
                     <tr>
                         <td>Base XP:</td>
@@ -60,7 +60,7 @@ function getDialogTable(iPkm) {
 function getAbilities(iPkm) {
 
     let abilities = "";
-    
+
     for (let iAbility = 0; iAbility < allPkmDetails[iPkm].abilities.length; iAbility++) {
         let ability = allPkmDetails[iPkm].abilities[iAbility].ability.name;
         abilities += ability;
@@ -95,6 +95,14 @@ async function getTemplatePokemonDialog(iPkm) {
                 </div> 
                 <div id="dialog-info">
                 ${await getDialogTable(iPkm)}
+                </div>
+                <div class="poke-dialog-counter">
+                <button onclick="showPreviousPokeDialog()" id="previous-dialog" aria-label="Previous image"><img src="./assets/icon/button_left.svg" alt="Arrow left"></button>
+                <h3 id="image-counter"
+                    aria-label="Pokemon-Card Counter">
+                    ${iPkm + 1}/${allPkmDetails.length}
+                    </h3>
+                <button onclick="showNextPokeDialog()" id="next-dialog" aria-label="Next dialog"><img src="./assets/icon/button_right.svg" alt="Arrow right"></button>
                 </div>
             </div>`;
 }

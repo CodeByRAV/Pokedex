@@ -67,7 +67,26 @@
 }
 
 #dialog-info {
+    margin-top: 8px;
     margin-bottom: 0;
     display: flex;
     justify-content: space-around;
+}
+
+.poke-dialog-counter {
+    color: white;
+    margin: 10px 0 10px 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+.poke-dialog-counter button {
+    display: inline-block;
+    background-color: transparent;
+    border-radius: 50%;
+    border: transparent;
+}
+
+.poke-dialog-counter button:hover {
+    cursor: pointer
 }
