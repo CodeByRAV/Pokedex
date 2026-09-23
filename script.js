@@ -1,14 +1,15 @@
 let allPkm = [];
-let allPkmDetails =[];
+let allPkmDetails = [];
 let pokemon = "pokemon?limit=20&offset=0";
 let noPLimit = "pokemon?limit=100000&offset=0";
 let allNames = [];
 let currentNames = [];
+let currentDialogIndex = 0;
 
 async function init() {
-console.log("Init is Running")
-await loadAndShowPokemon();
-await loadPokemonNamesOnly(noPLimit);
+    console.log("Init is Running")
+    await loadAndShowPokemon();
+    await loadPokemonNamesOnly(noPLimit);
 }
 
 const baseUrl = "https://pokeapi.co/api/v2/"
@@ -17,13 +18,13 @@ async function loadAndShowPokemon() {
     showLoadingSpinner();
 
     try {
-      await loadPokemon(pokemon);
-      await renderPokemonCards();
+        await loadPokemon(pokemon);
+        await renderPokemonCards();
     } catch (exceptionVar) {
-      console.log("error");
+        console.log("error");
     } finally {
-      hideLoadingSpinner();
-    }    
+        hideLoadingSpinner();
+    }
 }
 
 function showLoadingSpinner() {
@@ -42,20 +43,20 @@ function hideLoadingSpinner() {
     document.body.style.overflow = 'auto';
 }
 
-async function loadPokemon(path="") {
+async function loadPokemon(path = "") {
     let response = await fetch(baseUrl + path)
     let responseToJson = await response.json();
     console.table(responseToJson.results);
     allPkm = responseToJson.results
     console.log(allPkm);
 
-} 
+}
 
-async function loadPokemonNamesOnly(path="") {
+async function loadPokemonNamesOnly(path = "") {
     let response = await fetch(baseUrl + path)
     let responseToJson = await response.json();
     let allPkmNoLimit = responseToJson.results
-    for (let i = 0; i <allPkmNoLimit.length; i++) {
+    for (let i = 0; i < allPkmNoLimit.length; i++) {
         allNames.push(allPkmNoLimit[i].name);
     }
     console.log(allNames);
@@ -63,7 +64,7 @@ async function loadPokemonNamesOnly(path="") {
 
 function formatPokemonName(name) {
     let formattedName = name.charAt(0).toUpperCase() +
-    name.slice(1);
+        name.slice(1);
     return formattedName;
 }
 
@@ -80,9 +81,9 @@ async function renderPokemonCards() {
 }
 
 function renderNames() {
-for (let i = 0; i < currentNames.length; i++) {
-document.getElementById('pokemon-names').innerHTML += `${currentNames[i]}`
-}
+    for (let i = 0; i < currentNames.length; i++) {
+        document.getElementById('pokemon-names').innerHTML += `${currentNames[i]}`
+    }
 }
 
 async function filterAndShowNames(filterWord) {
@@ -100,7 +101,7 @@ async function filterAndShowNames(filterWord) {
 
 async function loadMorePokemon() {
     let currentCount = allPkm.length;
-    let response = await fetch (baseUrl + `pokemon?limit=20&offset=${currentCount}`);
+    let response = await fetch(baseUrl + `pokemon?limit=20&offset=${currentCount}`);
     let responseToJson = await response.json();
     console.log(...responseToJson.results);
     allPkm.push(...responseToJson.results);
@@ -112,4 +113,9 @@ async function loadMorePokemon() {
         document.getElementById('pokemon-container').innerHTML += await getTemplatePokemonCard(iPkm, pokeName);
     }
     console.log(allPkmDetails);
+}
+
+async function showNextPokeDialog() {
+    currentDialogIndex++;
+    openPokemonDialog(currentDialogIndex);
 }
