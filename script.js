@@ -116,6 +116,10 @@ async function loadMorePokemon() {
 }
 
 async function showNextPokeDialog() {
-    currentDialogIndex++;
+    if (currentDialogIndex === allPkmDetails.length - 1) {
+        currentDialogIndex = 0;
+    } else {
+        currentDialogIndex++;
+    }
     openPokemonDialog(currentDialogIndex);
 }
