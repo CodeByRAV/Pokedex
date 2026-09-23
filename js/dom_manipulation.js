@@ -28,6 +28,11 @@ async function openPokemonDialog(iPkm) {
 
 dialogRef.addEventListener('click', (event) => {
     if (event.target === dialogRef) {
-        dialogRef.close();
+        closeDialog(event);
     }
 });
+
+function dialogClosed() {
+    document.documentElement.style.position = 'inherit';
+    dialogRef.classList.remove("opened");
+}
