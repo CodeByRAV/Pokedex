@@ -115,7 +115,16 @@ async function loadMorePokemon() {
     console.log(allPkmDetails);
 }
 
-async function showNextPokeDialog() {
+function showPreviousPokeDialog () {
+    if (currentDialogIndex <= 0) {
+        currentDialogIndex = allPkmDetails.length -1
+    } else {
+        currentDialogIndex--;
+    }
+    openPokemonDialog(currentDialogIndex);
+}
+
+function showNextPokeDialog() {
     if (currentDialogIndex === allPkmDetails.length - 1) {
         currentDialogIndex = 0;
     } else {
