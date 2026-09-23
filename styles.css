@@ -69,6 +69,7 @@ footer {
     width: 250px;
     border-radius: 15px;
     margin: 20px;
+    transition: all 0.1s ease-in-out;
 }
 
 .poke-img {
@@ -213,5 +214,10 @@ footer {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(720deg); }
+}
+
+.pokemon-card:hover {
+    transform: scale(1.05);
+    transition: all 0.3s ease-in-out;
 }
 
