@@ -3,7 +3,6 @@ const dialogRef = document.getElementById("pokemon-dialog");
 function openDialog() {
     document.documentElement.style.position = 'fixed';
     dialogRef.showModal();
-    console.log("Dialog is opening");
     dialogRef.classList.add("opened");
 }
 
@@ -20,7 +19,6 @@ function stopProp(event){
 
 
 async function openPokemonDialog(iPkm) {
-    console.log(allPkmDetails[iPkm]);
     let dialogContent = await getTemplatePokemonDialog(iPkm);
     document.getElementById("pokemon-dialog-content").innerHTML = dialogContent;
     currentDialogIndex = iPkm;

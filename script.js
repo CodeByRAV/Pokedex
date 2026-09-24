@@ -7,7 +7,6 @@ let currentNames = [];
 let currentDialogIndex = 0;
 
 async function init() {
-    console.log("Init is Running")
     await loadAndShowPokemon();
     await loadPokemonNamesOnly(noPLimit);
 }
@@ -46,10 +45,7 @@ function hideLoadingSpinner() {
 async function loadPokemon(path = "") {
     let response = await fetch(baseUrl + path)
     let responseToJson = await response.json();
-    console.table(responseToJson.results);
     allPkm = responseToJson.results
-    console.log(allPkm);
-
 }
 
 async function loadPokemonNamesOnly(path = "") {
@@ -59,7 +55,6 @@ async function loadPokemonNamesOnly(path = "") {
     for (let i = 0; i < allPkmNoLimit.length; i++) {
         allNames.push(allPkmNoLimit[i].name);
     }
-    console.log(allNames);
 }
 
 function formatPokemonName(name) {
@@ -69,7 +64,6 @@ function formatPokemonName(name) {
 }
 
 async function renderPokemonCards() {
-    console.log("RENDERING", allPkm.length);
     for (let iPkm = 0; iPkm < allPkm.length; iPkm++) {
         let pokeName = formatPokemonName(allPkm[iPkm].name);
         let response = await fetch(allPkm[iPkm].url)
@@ -77,7 +71,6 @@ async function renderPokemonCards() {
         allPkmDetails.push(responseToJson);
         document.getElementById('pokemon-container').innerHTML += await getTemplatePokemonCard(iPkm, pokeName);
     }
-    console.log(allPkmDetails);
 }
 
 function renderNames() {
@@ -105,7 +98,6 @@ async function loadMorePokemon() {
     let currentCount = allPkm.length;
     let response = await fetch(baseUrl + `pokemon?limit=20&offset=${currentCount}`);
     let responseToJson = await response.json();
-    console.log(...responseToJson.results);
     allPkm.push(...responseToJson.results);
     for (let iPkm = currentCount; iPkm < allPkm.length; iPkm++) {
         let pokeName = formatPokemonName(allPkm[iPkm].name);
@@ -114,7 +106,6 @@ async function loadMorePokemon() {
         allPkmDetails.push(responseToJson);
         document.getElementById('pokemon-container').innerHTML += await getTemplatePokemonCard(iPkm, pokeName);
     }
-    console.log(allPkmDetails);
 }
 
 function showPreviousPokeDialog() {

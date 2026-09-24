@@ -74,7 +74,7 @@ function getAbilities(iPkm) {
 }
 
 async function getTemplatePokemonDialog(iPkm) {
-    let pokeName = formatPokemonName(allPkmDetails[iPkm].name); console.log(allPkm[iPkm].name);
+    let pokeName = formatPokemonName(allPkmDetails[iPkm].name);
     return `
             <div class="pokemon-dialog">
                 <div class="dialog-header">
@@ -108,16 +108,13 @@ async function getTemplatePokemonDialog(iPkm) {
 }
 
 function getTemplateInfo(iPkm) {
-    console.log('InfoWorking');
     document.getElementById('dialog-info').innerHTML = getDialogTable(iPkm);
 }
 
 async function getTemplateEvo(iPkm) {
-    console.log('EvoWorking');
     let secondEvo = await loadEvolvedPokemon(iPkm);
     let firstEvo = await loadEvolvedFrom(iPkm);
     let finalEvo = await loadFinalEvolution(iPkm);
-    console.log('EvolvedPokemon', secondEvo);
     document.getElementById('dialog-info').innerHTML = `
     <div class="evolution-chain">
         <div class="evolution-chain-cards">
@@ -136,12 +133,10 @@ async function loadEvolvedPokemon(iPkm) {
     let evoResponse = await fetch(evoChainInfo);
     let evoResponseToJson = await evoResponse.json();
     let evoChain = evoResponseToJson.chain;
-    console.log(evoChain);
     let evolvedTo = evoChain.evolves_to[0].species.name;
     let evolvedToResponse = await fetch(baseUrl + "pokemon/" + evolvedTo);
     let evolvedToResponseToJson = await evolvedToResponse.json();
     let evolvedToSprite = evolvedToResponseToJson.sprites["front_default"];
-    console.log(evolvedToSprite);
     return evolvedToSprite;
 }
 
@@ -157,7 +152,6 @@ async function loadEvolvedFrom(iPkm) {
     let evofirstformResponse = await fetch(baseUrl + "pokemon/" + evofirstform);
     let evofirstformResponseToJson = await evofirstformResponse.json();
     let evofirstformSprite = evofirstformResponseToJson.sprites["front_default"];
-    console.log(evofirstformSprite);
     return evofirstformSprite;
 }
 
@@ -173,6 +167,5 @@ async function loadFinalEvolution(iPkm) {
     let finalEvoResponse = await fetch(baseUrl + "pokemon/" + finalEvo);
     let finalEvoResponseToJson = await finalEvoResponse.json();
     let finalEvoSprite = finalEvoResponseToJson.sprites["front_default"];
-    console.log(finalEvoSprite);
     return finalEvoSprite;
 }
