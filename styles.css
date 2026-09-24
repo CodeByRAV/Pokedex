@@ -221,3 +221,9 @@ footer {
     transition: all 0.3s ease-in-out;
 }
 
+
+.not-found {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

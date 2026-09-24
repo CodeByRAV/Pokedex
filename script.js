@@ -80,17 +80,21 @@ function renderNames() {
 }
 
 async function filterAndShowNames(filterWord) {
-    if (filterWord.length < 3) { return }
+    if (filterWord.length < 3) { getSearchGuideTemplate(); }
     else {
         allPkmDetails = [];
         currentNames = allNames.filter(name => name.includes(filterWord.toLowerCase()));
-        document.getElementById('pokemon-container').innerHTML = '';
-        for (let iPkm = 0; iPkm < currentNames.length; iPkm++) {
-            let pokeName = formatPokemonName(currentNames[iPkm]);
-            let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${currentNames[iPkm]}`)
-            let responseToJson = await response.json();
-            allPkmDetails.push(responseToJson);
-            document.getElementById('pokemon-container').innerHTML += await getTemplatePokemonCard(iPkm, pokeName);
+        if (currentNames.length === 0) {
+            getNotFoundTemplate();
+        } else {
+            document.getElementById('pokemon-container').innerHTML = '';
+            for (let iPkm = 0; iPkm < currentNames.length; iPkm++) {
+                let pokeName = formatPokemonName(currentNames[iPkm]);
+                let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${currentNames[iPkm]}`)
+                let responseToJson = await response.json();
+                allPkmDetails.push(responseToJson);
+                document.getElementById('pokemon-container').innerHTML += await getTemplatePokemonCard(iPkm, pokeName);
+            }
         }
     }
 }

@@ -169,3 +169,17 @@ async function loadFinalEvolution(iPkm) {
     let finalEvoSprite = finalEvoResponseToJson.sprites["front_default"];
     return finalEvoSprite;
 }
+
+function getNotFoundTemplate() {
+    document.getElementById('pokemon-container').innerHTML = `
+        <div class="not-found">
+            <h1>ERROR 404: No Pokemon were found. Please check the spelling and try again!</h1>
+        </div>`;
+}
+
+function getSearchGuideTemplate() {
+    document.getElementById('pokemon-container').innerHTML = `
+        <div class="not-found">
+            <h1>Please type at least 3 characters and try again!</h1>
+        </div>`;
+}
