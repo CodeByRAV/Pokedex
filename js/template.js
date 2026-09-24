@@ -1,8 +1,8 @@
 async function getTemplatePokemonCard(iPkm, pokeName) {
     return `
-    <button class="pokemon-card ${allPkmDetails[iPkm].types[0].type.name}" onclick="openPokemonDialog(${iPkm})">
+    <button data-id="card" class="pokemon-card ${allPkmDetails[iPkm].types[0].type.name}" onclick="openPokemonDialog(${iPkm})">
         <div class="pokemon-name"><h1>#${iPkm + 1} ${pokeName}</h1></div>
-        <img class="poke-img" src="${allPkmDetails[iPkm].sprites["front_default"]}"></img>
+        <img class="poke-img" data-id="card-image"  src="${allPkmDetails[iPkm].sprites["front_default"]}"></img>
         <div class="type-icons">
         ${await getTemplateTypeIcons(iPkm)}</div>
     </button>`
@@ -78,13 +78,13 @@ async function getTemplatePokemonDialog(iPkm) {
     return `
             <div class="pokemon-dialog">
                 <div class="dialog-header">
-                    <h1>${pokeName}</h1>
-                    <button onclick="closeDialog(event)" aria-label="Close dialog">
+                    <h1 data-id="overlay-pokemon-name">${pokeName}</h1>
+                    <button data-id="close-dialog-button" onclick="closeDialog(event)" aria-label="Close dialog">
                             <img src="./assets/icon/close.svg" alt="close button">
                     </button>
                 </div>
                 <div class="poke-img-dialog">
-                    <img src="${allPkmDetails[iPkm].sprites["front_default"]}"></img>
+                    <img data-id="dialog-image" src="${allPkmDetails[iPkm].sprites["front_default"]}"></img>
                 </div>
                 <div class="type-icons">
                     ${await getTemplateTypeIcons(iPkm)}
@@ -97,12 +97,12 @@ async function getTemplatePokemonDialog(iPkm) {
                 ${await getDialogTable(iPkm)}
                 </div>
                 <div class="poke-dialog-counter">
-                <button onclick="showPreviousPokeDialog()" id="previous-dialog" aria-label="Previous image"><img src="./assets/icon/button_left.svg" alt="Arrow left"></button>
+                <button data-id="prev-button" onclick="showPreviousPokeDialog()" id="previous-dialog" aria-label="Previous image"><img src="./assets/icon/button_left.svg" alt="Arrow left"></button>
                 <h3 id="image-counter"
                     aria-label="Pokemon-Card Counter">
                     ${iPkm + 1}/${allPkmDetails.length}
                     </h3>
-                <button onclick="showNextPokeDialog()" id="next-dialog" aria-label="Next dialog"><img src="./assets/icon/button_right.svg" alt="Arrow right"></button>
+                <button data-id="next-button" onclick="showNextPokeDialog()" id="next-dialog" aria-label="Next dialog"><img src="./assets/icon/button_right.svg" alt="Arrow right"></button>
                 </div>
             </div>`;
 }
