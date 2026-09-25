@@ -227,3 +227,7 @@ footer {
     justify-content: center;
     align-items: center;
 }
+
+.no-scroll {
+    overflow: hidden;
+}
