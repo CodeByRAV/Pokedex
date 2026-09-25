@@ -5,17 +5,16 @@ let noPLimit = "pokemon?limit=100000&offset=0";
 let allNames = [];
 let currentNames = [];
 let currentDialogIndex = 0;
+const baseUrl = "https://pokeapi.co/api/v2/"
 
 async function init() {
     await loadAndShowPokemon();
     await loadPokemonNamesOnly(noPLimit);
 }
 
-const baseUrl = "https://pokeapi.co/api/v2/"
-
 async function loadAndShowPokemon() {
     showLoadingSpinner();
-
+    
     try {
         await loadPokemon(pokemon);
         await renderPokemonCards();
@@ -33,13 +32,13 @@ function showLoadingSpinner() {
         <div class="spinner"><img src="./assets/icon/pokeball.svg" alt="Loading..."></div>
         <p>Loading...</p>
     </div>`;
-    document.body.style.overflow = 'hidden';
+    document.body.classList.add('no-scroll');
 }
 
 function hideLoadingSpinner() {
     document.getElementById('spinner').classList.add('d-none');
     document.getElementById('load-more-button').classList.remove('d-none');
-    document.body.style.overflow = 'auto';
+    document.body.classList.remove('no-scroll');
 }
 
 async function loadPokemon(path = "") {
