@@ -83,23 +83,17 @@ async function filterAndShowNames(filterWord) {
         getSearchGuideTemplate();
         document.getElementById('load-more-button').classList.add('d-none');
         document.getElementById('return-to-main-button').classList.remove('d-none');
+        return;
     }
-    else {
-        allPkmDetails = [];
-        currentNames = allNames.filter(name => name.includes(filterWord.toLowerCase()));
-        if (currentNames.length === 0) {
-            getNotFoundTemplate();
-        } else {
-            document.getElementById('pokemon-container').innerHTML = '';
-            for (let iPkm = 0; iPkm < currentNames.length; iPkm++) {
-                let pokeName = formatPokemonName(currentNames[iPkm]);
-                let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${currentNames[iPkm]}`)
-                let responseToJson = await response.json();
-                allPkmDetails.push(responseToJson);
-                document.getElementById('pokemon-container').innerHTML += await getTemplatePokemonCard(iPkm, pokeName);
-            }
-        }
+    allPkmDetails = [];
+    currentNames = allNames.filter(name => name.includes(filterWord.toLowerCase()));
+    if (currentNames.length === 0) {
+        getNotFoundTemplate();
+        document.getElementById('load-more-button').classList.add('d-none');
+        document.getElementById('return-to-main-button').classList.remove('d-none');
+        return;
     }
+    replaceThenRenderCards();
 }
 async function loadMorePokemon() {
     showLoadingSpinner();
@@ -143,16 +137,25 @@ function showNextPokeDialog() {
 }
 
 async function returnToMain() {
+    console.log(allPkmDetails);
+    allPkmDetails = [];
     document.getElementById('pokemon-container').innerHTML = ''
-        showLoadingSpinner();
 
-    try {
-        await loadPokemon(pokemon);
-        await renderPokemonCards();
-    } catch (exceptionVar) {
-        console.log("error");
-    } finally {
-        hideLoadingSpinner();
-    }
+    await loadPokemon(pokemon);
+    await renderPokemonCards();
+    document.getElementById('load-more-button').classList.remove('d-none');
     document.getElementById('return-to-main-button').classList.add('d-none');
+}
+
+async function replaceThenRenderCards() {
+    document.getElementById('pokemon-container').innerHTML = '';
+    for (let iPkm = 0; iPkm < currentNames.length; iPkm++) {
+        let pokeName = formatPokemonName(currentNames[iPkm]);
+        let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${currentNames[iPkm]}`)
+        let responseToJson = await response.json();
+        allPkmDetails.push(responseToJson);
+        document.getElementById('pokemon-container').innerHTML += await getTemplatePokemonCard(iPkm, pokeName);
+    }
+    document.getElementById('load-more-button').classList.add('d-none');
+    document.getElementById('return-to-main-button').classList.remove('d-none');
 }
