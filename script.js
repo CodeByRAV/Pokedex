@@ -79,7 +79,11 @@ function renderNames() {
 }
 
 async function filterAndShowNames(filterWord) {
-    if (filterWord.length < 3) { getSearchGuideTemplate(); }
+    if (filterWord.length < 3) {
+        getSearchGuideTemplate();
+        document.getElementById('load-more-button').classList.add('d-none');
+        document.getElementById('return-to-main-button').classList.remove('d-none');
+    }
     else {
         allPkmDetails = [];
         currentNames = allNames.filter(name => name.includes(filterWord.toLowerCase()));
@@ -112,12 +116,13 @@ async function loadMorePokemon() {
             let responseToJson = await response.json();
             allPkmDetails.push(responseToJson);
             document.getElementById('pokemon-container').innerHTML += await getTemplatePokemonCard(iPkm, pokeName);
-        } }catch (exceptionVar) {
-            console.log("error");
-        } finally {
-            hideLoadingSpinner();
         }
+    } catch (exceptionVar) {
+        console.log("error");
+    } finally {
+        hideLoadingSpinner();
     }
+}
 
 function showPreviousPokeDialog() {
     if (currentDialogIndex <= 0) {
@@ -135,4 +140,19 @@ function showNextPokeDialog() {
         currentDialogIndex++;
     }
     openPokemonDialog(currentDialogIndex);
+}
+
+async function returnToMain() {
+    document.getElementById('pokemon-container').innerHTML = ''
+        showLoadingSpinner();
+
+    try {
+        await loadPokemon(pokemon);
+        await renderPokemonCards();
+    } catch (exceptionVar) {
+        console.log("error");
+    } finally {
+        hideLoadingSpinner();
+    }
+    document.getElementById('return-to-main-button').classList.add('d-none');
 }
