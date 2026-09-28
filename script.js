@@ -14,7 +14,6 @@ async function init() {
 
 async function loadAndShowPokemon() {
     showLoadingSpinner();
-
     try {
         await loadPokemon(pokemon);
         await renderPokemonCards();
@@ -23,13 +22,14 @@ async function loadAndShowPokemon() {
         getErrorTemplate();
         document.getElementById('load-more-button').classList.add('d-none');
         document.getElementById('return-to-main-button').classList.remove('d-none');
-
     } finally {
         hideLoadingSpinner();
     }
 }
 
 function showLoadingSpinner() {
+    document.getElementById('spinner').classList.remove('d-none');
+    console.log(document.getElementById('spinner'));
     document.getElementById('load-more-button').classList.add('d-none');
     document.getElementById('spinner').innerHTML = `
     <div class="loading-spinner">
@@ -101,7 +101,6 @@ async function filterAndShowNames(filterWord) {
 }
 async function loadMorePokemon() {
     showLoadingSpinner();
-
     try {
         let currentCount = allPkm.length;
         let response = await fetch(baseUrl + `pokemon?limit=20&offset=${currentCount}`);
