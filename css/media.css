@@ -1,0 +1,15 @@
+@media screen and (max-width: 600px) {
+    .header-content {
+        flex-direction: column;
+        padding: 0 14px;
+    }    
+    h1 {
+        font-size: 26px;
+    }
+    header {
+        height: 138px;
+    }
+    #search-input {
+        width: 160px;
+    }
+}
