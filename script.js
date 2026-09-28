@@ -25,7 +25,7 @@ async function loadAndShowPokemon() {
     } finally {
         hideLoadingSpinner();
     }
-    
+
 }
 
 function showLoadingSpinner() {
@@ -173,15 +173,20 @@ async function returnToMain() {
 }
 
 async function replaceThenRenderCards() {
-
+    let allReplacedCards = '';
     document.getElementById('pokemon-container').innerHTML = '';
     for (let indexPkm = 0; indexPkm < currentNames.length; indexPkm++) {
-        let pokeName = formatPokemonName(currentNames[indexPkm]);
-        let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${currentNames[indexPkm]}`)
-        let responseToJson = await response.json();
-        allPkmDetails.push(responseToJson);
-        document.getElementById('pokemon-container').innerHTML += await getTemplatePokemonCard(indexPkm, pokeName);
+    let cachedPokemon = allPkmDetails.find(pokemon => pokemon.name === currentNames[indexPkm]);
+    let pokeName = formatPokemonName(currentNames[indexPkm]);
+        if (!cachedPokemon) {
+            let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${currentNames[indexPkm]}`)
+            let responseToJson = await response.json();
+            allPkmDetails.push(responseToJson);
+        }
+        searchIndex = allPkmDetails.findIndex(pokemon => pokemon.name === currentNames[indexPkm]);
+        allReplacedCards += await getTemplatePokemonCard(searchIndex, pokeName);
     }
+    document.getElementById('pokemon-container').innerHTML = allReplacedCards;
     replaceLoadWithReturnButton();
 }
 
