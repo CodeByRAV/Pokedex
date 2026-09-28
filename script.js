@@ -20,6 +20,10 @@ async function loadAndShowPokemon() {
         await renderPokemonCards();
     } catch (exceptionVar) {
         console.log("error");
+        getErrorTemplate();
+        document.getElementById('load-more-button').classList.add('d-none');
+        document.getElementById('return-to-main-button').classList.remove('d-none');
+
     } finally {
         hideLoadingSpinner();
     }

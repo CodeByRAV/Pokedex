@@ -183,3 +183,11 @@ function getSearchGuideTemplate() {
             <h1>Please type at least 3 characters and try again!</h1>
         </div>`;
 }
+
+function getErrorTemplate() {
+        document.getElementById('pokemon-container').innerHTML = `
+        <div class="failed-to-load">
+            <h1>ERROR: 404</h1>
+            <p>Pokemon couldnt be loaded, try again later!</p>
+        </div>`;
+}
