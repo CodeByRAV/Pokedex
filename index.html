@@ -23,13 +23,18 @@
 
 <body onload="init()">
     <header>
-        <div class="logo">
-            <h1>Pokedex</h1>
-            <img class="pokeball" src="./assets/icon/pokeball.svg"></img>
+        <div class="header-content">
+            <div class="logo">
+                <h1>Pokedex</h1>
+                <img class="pokeball" src="./assets/icon/pokeball.svg"></img>
+            </div>
+            <nav>
+                <input id="search-input" data-id="search-input" type="text" placeholder="Search Pokemon..."
+                    onkeydown="if (event.keyCode === 13) {filterAndShowNames(this.value)}"> <button id="search-button"
+                    data-id=”search-button”
+                    onclick="filterAndShowNames(document.getElementById('search-input').value)">Search</button>
+            </nav>
         </div>
-        <nav>
-             <input id="search-input" data-id="search-input" type="text" placeholder="Search Pokemon..." onkeydown="if (event.keyCode === 13) {filterAndShowNames(this.value)}"> <button id="search-button" data-id=”search-button” onclick="filterAndShowNames(document.getElementById('search-input').value)">Search</button>
-        </nav>
     </header>
     <main data-id="content">
         <section id="pokemon-list" class="pokedex">
@@ -42,10 +47,12 @@
             <div class="load-more-wrapper">
                 <div id="pokemon-container" class="pokemon-container">
                 </div>
-                
+
                 <div class="load-more" id="load-more-container">
-                    <button id="load-more-button" data-id="load-more-button" class="load-more-button d-none" onclick="loadMorePokemon()">Show More</button>
-                    <button id="return-to-main-button" class="return-to-main d-none" onclick="returnToMain()">Load First 20 Pokemon</button>
+                    <button id="load-more-button" data-id="load-more-button" class="load-more-button d-none"
+                        onclick="loadMorePokemon()">Show More</button>
+                    <button id="return-to-main-button" class="return-to-main d-none" onclick="returnToMain()">Load First
+                        20 Pokemon</button>
                 </div>
             </div>
         </section>
