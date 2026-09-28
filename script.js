@@ -17,13 +17,15 @@ async function loadAndShowPokemon() {
     try {
         await loadPokemon(pokemon);
         await fetchPokemonCardDetails();
+        replaceReturnWithLoadButton();
     } catch (exceptionVar) {
         console.log("error");
         document.getElementById('pokemon-container').innerHTML = getErrorTemplate();
+        replaceLoadWithReturnButton();
     } finally {
         hideLoadingSpinner();
     }
-    replaceLoadWithReturnButton();
+    
 }
 
 function showLoadingSpinner() {
@@ -82,12 +84,6 @@ async function renderPokemonCards() {
         allCards += await getTemplatePokemonCard(indexPkm, pokeName);
     }
     document.getElementById('pokemon-container').innerHTML = allCards;
-}
-
-function renderNames() {
-    for (let i = 0; i < currentNames.length; i++) {
-        document.getElementById('pokemon-names').innerHTML += `${currentNames[i]}`
-    }
 }
 
 function replaceLoadWithReturnButton() {
@@ -177,6 +173,7 @@ async function returnToMain() {
 }
 
 async function replaceThenRenderCards() {
+
     document.getElementById('pokemon-container').innerHTML = '';
     for (let indexPkm = 0; indexPkm < currentNames.length; indexPkm++) {
         let pokeName = formatPokemonName(currentNames[indexPkm]);
@@ -185,8 +182,7 @@ async function replaceThenRenderCards() {
         allPkmDetails.push(responseToJson);
         document.getElementById('pokemon-container').innerHTML += await getTemplatePokemonCard(indexPkm, pokeName);
     }
-    document.getElementById('load-more-button').classList.add('d-none');
-    document.getElementById('return-to-main-button').classList.remove('d-none');
+    replaceLoadWithReturnButton();
 }
 
 async function getTypeIcons(indexPkm) {
