@@ -33,11 +33,7 @@ function showLoadingSpinner() {
     document.getElementById('spinner').classList.remove('d-none');
     console.log(document.getElementById('spinner'));
     document.getElementById('load-more-button').classList.add('d-none');
-    document.getElementById('spinner').innerHTML = `
-    <div class="loading-spinner">
-        <div class="spinner"><img src="./assets/icon/pokeball.svg" alt="Loading..."></div>
-        <p>Loading...</p>
-    </div>`;
+    document.getElementById('spinner').innerHTML = getTemplateSpinner();
     document.body.classList.add('no-scroll');
 }
 

@@ -95,3 +95,11 @@ function getErrorTemplate() {
             <p>Pokemon couldnt be loaded, try again later!</p>
         </div>`;
 }
+
+function getTemplateSpinner() {
+    return `
+    <div class="loading-spinner">
+        <div class="spinner"><img src="./assets/icon/pokeball.svg" alt="Loading..."></div>
+        <p>Loading...</p>
+    </div>`;
+}
