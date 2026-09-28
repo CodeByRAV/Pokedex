@@ -67,12 +67,12 @@ function formatPokemonName(name) {
 }
 
 async function renderPokemonCards() {
-    for (let iPkm = 0; iPkm < allPkm.length; iPkm++) {
-        let pokeName = formatPokemonName(allPkm[iPkm].name);
-        let response = await fetch(allPkm[iPkm].url)
+    for (let indexPkm = 0; indexPkm < allPkm.length; indexPkm++) {
+        let pokeName = formatPokemonName(allPkm[indexPkm].name);
+        let response = await fetch(allPkm[indexPkm].url)
         let responseToJson = await response.json();
         allPkmDetails.push(responseToJson);
-        document.getElementById('pokemon-container').innerHTML += await getTemplatePokemonCard(iPkm, pokeName);
+        document.getElementById('pokemon-container').innerHTML += await getTemplatePokemonCard(indexPkm, pokeName);
     }
 }
 
@@ -108,12 +108,12 @@ async function loadMorePokemon() {
         let responseToJson = await response.json();
         allPkm.push(...responseToJson.results);
 
-        for (let iPkm = currentCount; iPkm < allPkm.length; iPkm++) {
-            let pokeName = formatPokemonName(allPkm[iPkm].name);
-            let response = await fetch(allPkm[iPkm].url)
+        for (let indexPkm = currentCount; indexPkm < allPkm.length; indexPkm++) {
+            let pokeName = formatPokemonName(allPkm[indexPkm].name);
+            let response = await fetch(allPkm[indexPkm].url)
             let responseToJson = await response.json();
             allPkmDetails.push(responseToJson);
-            document.getElementById('pokemon-container').innerHTML += await getTemplatePokemonCard(iPkm, pokeName);
+            document.getElementById('pokemon-container').innerHTML += await getTemplatePokemonCard(indexPkm, pokeName);
         }
     } catch (exceptionVar) {
         console.log("error");
@@ -153,12 +153,12 @@ async function returnToMain() {
 
 async function replaceThenRenderCards() {
     document.getElementById('pokemon-container').innerHTML = '';
-    for (let iPkm = 0; iPkm < currentNames.length; iPkm++) {
-        let pokeName = formatPokemonName(currentNames[iPkm]);
-        let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${currentNames[iPkm]}`)
+    for (let indexPkm = 0; indexPkm < currentNames.length; indexPkm++) {
+        let pokeName = formatPokemonName(currentNames[indexPkm]);
+        let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${currentNames[indexPkm]}`)
         let responseToJson = await response.json();
         allPkmDetails.push(responseToJson);
-        document.getElementById('pokemon-container').innerHTML += await getTemplatePokemonCard(iPkm, pokeName);
+        document.getElementById('pokemon-container').innerHTML += await getTemplatePokemonCard(indexPkm, pokeName);
     }
     document.getElementById('load-more-button').classList.add('d-none');
     document.getElementById('return-to-main-button').classList.remove('d-none');
