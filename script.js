@@ -16,16 +16,15 @@ async function loadAndShowPokemon() {
     showLoadingSpinner();
     try {
         await loadPokemon(pokemon);
-        await renderPokemonCards();
+        await fetchPokemonCardDetails();
     } catch (exceptionVar) {
         console.log("error");
         getErrorTemplate();
-        document.getElementById('load-more-button').classList.add('d-none');
-        document.getElementById('return-to-main-button').classList.remove('d-none');
+
     } finally {
         hideLoadingSpinner();
     }
-    document.getElementById('load-more-button').classList.remove('d-none');
+    replaceLoadWithReturnButton();
 }
 
 function showLoadingSpinner() {
@@ -66,14 +65,24 @@ function formatPokemonName(name) {
     return formattedName;
 }
 
+async function fetchPokemonCardDetails() {
+    for (let indexPkm = 0; indexPkm < allPkm.length; indexPkm++) {
+        if (!allPkmDetails[indexPkm]) {
+            let response = await fetch(allPkm[indexPkm].url)
+            let responseToJson = await response.json();
+            allPkmDetails.push(responseToJson);
+        }
+    }
+    await renderPokemonCards();
+}
+
 async function renderPokemonCards() {
+    let allCards = '';
     for (let indexPkm = 0; indexPkm < allPkm.length; indexPkm++) {
         let pokeName = formatPokemonName(allPkm[indexPkm].name);
-        let response = await fetch(allPkm[indexPkm].url)
-        let responseToJson = await response.json();
-        allPkmDetails.push(responseToJson);
-        document.getElementById('pokemon-container').innerHTML += await getTemplatePokemonCard(indexPkm, pokeName);
+        allCards += await getTemplatePokemonCard(indexPkm, pokeName);
     }
+    document.getElementById('pokemon-container').innerHTML = allCards;
 }
 
 function renderNames() {
@@ -163,7 +172,7 @@ async function returnToMain() {
     document.getElementById('pokemon-container').innerHTML = ''
 
     await loadPokemon(pokemon);
-    await renderPokemonCards();
+    await fetchPokemonCardDetails();
     document.getElementById('load-more-button').classList.remove('d-none');
     document.getElementById('return-to-main-button').classList.add('d-none');
 }
