@@ -192,7 +192,7 @@ async function replaceThenRenderCards() {
             let responseToJson = await response.json();
             allPkmDetails.push(responseToJson);
         }
-        searchIndex = allPkmDetails.findIndex(pokemon => pokemon.name === currentNames[indexPkm]);
+        let searchIndex = allPkmDetails.findIndex(pokemon => pokemon.name === currentNames[indexPkm]);
         allReplacedCards += await getTemplatePokemonCard(searchIndex, pokeName);
     }
     document.getElementById('pokemon-container').innerHTML = allReplacedCards;
