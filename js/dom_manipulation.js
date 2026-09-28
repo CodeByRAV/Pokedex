@@ -19,7 +19,8 @@ function stopProp(event){
 
 
 async function openPokemonDialog(indexPkm) {
-    let dialogContent = await getTemplatePokemonDialog(indexPkm);
+    let pokeName = formatPokemonName(allPkmDetails[indexPkm].name);
+    let dialogContent = await getTemplatePokemonDialog(indexPkm, pokeName);
     document.getElementById("pokemon-dialog-content").innerHTML = dialogContent;
     currentDialogIndex = indexPkm;
     openDialog();

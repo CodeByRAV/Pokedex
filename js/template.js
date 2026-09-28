@@ -4,35 +4,8 @@ async function getTemplatePokemonCard(indexPkm, pokeName) {
         <div class="pokemon-name"><h1>#${indexPkm + 1} ${pokeName}</h1></div>
         <img class="poke-img" data-id="card-image"  src="${allPkmDetails[indexPkm].sprites["front_default"]}"></img>
         <div class="type-icons">
-        ${await getTemplateTypeIcons(indexPkm)}</div>
+        ${await getTypeIcons(indexPkm)}</div>
     </button>`
-}
-
-async function getTemplateTypeIcons(indexPkm) {
-    let typeIcons = "";
-
-    for (let iType = 0; iType < allPkmDetails[indexPkm].types.length; iType++) {
-        let pokeTypeIconURL = allPkmDetails[indexPkm].types[iType].type.url
-        let response = await fetch(pokeTypeIconURL);
-        let responseToJson = await response.json();
-
-        let generations = Object.keys(responseToJson.sprites);
-        let generation = "";
-        let pokeTypeIcon = "";
-
-        for (let i in generations) {
-            let game = Object.keys(responseToJson.sprites[generations[i]])[0];
-            if (responseToJson.sprites[generations[i]][game].name_icon !== null) {
-                generation = Object.keys(responseToJson.sprites)[i];
-                pokeTypeIcon = responseToJson.sprites[generation][game].name_icon;
-                break;
-            }
-        }
-        typeIcons += `
-    <img src="${pokeTypeIcon}"></img>
-    `}
-
-    return typeIcons;
 }
 
 function getDialogTable(indexPkm) {
@@ -57,24 +30,7 @@ function getDialogTable(indexPkm) {
                 </table>`;
 }
 
-function getAbilities(indexPkm) {
-
-    let abilities = "";
-
-    for (let iAbility = 0; iAbility < allPkmDetails[indexPkm].abilities.length; iAbility++) {
-        let ability = allPkmDetails[indexPkm].abilities[iAbility].ability.name;
-        abilities += ability;
-
-        if (iAbility < allPkmDetails[indexPkm].abilities.length - 1) {
-            abilities += ", ";
-        }
-    }
-
-    return abilities;
-}
-
-async function getTemplatePokemonDialog(indexPkm) {
-    let pokeName = formatPokemonName(allPkmDetails[indexPkm].name);
+async function getTemplatePokemonDialog(indexPkm, pokeName) {
     return `
             <div class="pokemon-dialog">
                 <div class="dialog-header">
@@ -87,7 +43,7 @@ async function getTemplatePokemonDialog(indexPkm) {
                     <img data-id="dialog-image" src="${allPkmDetails[indexPkm].sprites["front_default"]}"></img>
                 </div>
                 <div class="type-icons">
-                    ${await getTemplateTypeIcons(indexPkm)}
+                    ${await getTypeIcons(indexPkm)}
                 </div>
                 <div class="pokemon-dialog-tabs">
                     <button onclick="getTemplateInfo(${indexPkm})">Main</button>
@@ -107,10 +63,6 @@ async function getTemplatePokemonDialog(indexPkm) {
             </div>`;
 }
 
-function getTemplateInfo(indexPkm) {
-    document.getElementById('dialog-info').innerHTML = getDialogTable(indexPkm);
-}
-
 async function getTemplateEvo(indexPkm) {
     let secondEvo = await loadEvolvedPokemon(indexPkm);
     let firstEvo = await loadEvolvedFrom(indexPkm);
@@ -123,51 +75,6 @@ async function getTemplateEvo(indexPkm) {
         <img src="${finalEvo}"></img>
         </div>
     </div>`;
-}
-
-async function loadEvolvedPokemon(indexPkm) {
-    let evoChainURL = allPkmDetails[indexPkm].species.url;
-    let response = await fetch(evoChainURL);
-    let responseToJson = await response.json();
-    let evoChainInfo = responseToJson.evolution_chain.url;
-    let evoResponse = await fetch(evoChainInfo);
-    let evoResponseToJson = await evoResponse.json();
-    let evoChain = evoResponseToJson.chain;
-    let evolvedTo = evoChain.evolves_to[0].species.name;
-    let evolvedToResponse = await fetch(baseUrl + "pokemon/" + evolvedTo);
-    let evolvedToResponseToJson = await evolvedToResponse.json();
-    let evolvedToSprite = evolvedToResponseToJson.sprites["front_default"];
-    return evolvedToSprite;
-}
-
-async function loadEvolvedFrom(indexPkm) {
-    let evoChainURL = allPkmDetails[indexPkm].species.url;
-    let response = await fetch(evoChainURL);
-    let responseToJson = await response.json();
-    let evoChainInfo = responseToJson.evolution_chain.url;
-    let evoResponse = await fetch(evoChainInfo);
-    let evoResponseToJson = await evoResponse.json();
-    let evoChain = evoResponseToJson.chain;
-    let evofirstform = evoChain.species.name;
-    let evofirstformResponse = await fetch(baseUrl + "pokemon/" + evofirstform);
-    let evofirstformResponseToJson = await evofirstformResponse.json();
-    let evofirstformSprite = evofirstformResponseToJson.sprites["front_default"];
-    return evofirstformSprite;
-}
-
-async function loadFinalEvolution(indexPkm) {
-    let evoChainURL = allPkmDetails[indexPkm].species.url;
-    let response = await fetch(evoChainURL);
-    let responseToJson = await response.json();
-    let evoChainInfo = responseToJson.evolution_chain.url;
-    let evoResponse = await fetch(evoChainInfo);
-    let evoResponseToJson = await evoResponse.json();
-    let evoChain = evoResponseToJson.chain;
-    let finalEvo = evoChain.evolves_to[0].evolves_to[0].species.name;
-    let finalEvoResponse = await fetch(baseUrl + "pokemon/" + finalEvo);
-    let finalEvoResponseToJson = await finalEvoResponse.json();
-    let finalEvoSprite = finalEvoResponseToJson.sprites["front_default"];
-    return finalEvoSprite;
 }
 
 function getNotFoundTemplate() {

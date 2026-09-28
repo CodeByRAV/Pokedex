@@ -163,3 +163,90 @@ async function replaceThenRenderCards() {
     document.getElementById('load-more-button').classList.add('d-none');
     document.getElementById('return-to-main-button').classList.remove('d-none');
 }
+
+async function getTypeIcons(indexPkm) {
+    let typeIcons = "";
+    for (let iType = 0; iType < allPkmDetails[indexPkm].types.length; iType++) {
+        let pokeTypeIconURL = allPkmDetails[indexPkm].types[iType].type.url
+        let response = await fetch(pokeTypeIconURL);
+        let responseToJson = await response.json();
+        let generations = Object.keys(responseToJson.sprites);
+        let generation = "";
+        let pokeTypeIcon = "";
+        for (let i in generations) {
+            let game = Object.keys(responseToJson.sprites[generations[i]])[0];
+            if (responseToJson.sprites[generations[i]][game].name_icon !== null) {
+                generation = Object.keys(responseToJson.sprites)[i];
+                pokeTypeIcon = responseToJson.sprites[generation][game].name_icon;
+                break;
+            }
+        }
+        typeIcons += `
+    <img src="${pokeTypeIcon}"></img>
+    `}
+    return typeIcons;
+}
+
+function getAbilities(indexPkm) {
+
+    let abilities = "";
+
+    for (let iAbility = 0; iAbility < allPkmDetails[indexPkm].abilities.length; iAbility++) {
+        let ability = allPkmDetails[indexPkm].abilities[iAbility].ability.name;
+        abilities += ability;
+
+        if (iAbility < allPkmDetails[indexPkm].abilities.length - 1) {
+            abilities += ", ";
+        }
+    }
+    return abilities;
+}
+
+async function loadEvolvedPokemon(indexPkm) {
+    let evoChainURL = allPkmDetails[indexPkm].species.url;
+    let response = await fetch(evoChainURL);
+    let responseToJson = await response.json();
+    let evoChainInfo = responseToJson.evolution_chain.url;
+    let evoResponse = await fetch(evoChainInfo);
+    let evoResponseToJson = await evoResponse.json();
+    let evoChain = evoResponseToJson.chain;
+    let evolvedTo = evoChain.evolves_to[0].species.name;
+    let evolvedToResponse = await fetch(baseUrl + "pokemon/" + evolvedTo);
+    let evolvedToResponseToJson = await evolvedToResponse.json();
+    let evolvedToSprite = evolvedToResponseToJson.sprites["front_default"];
+    return evolvedToSprite;
+}
+
+async function loadEvolvedFrom(indexPkm) {
+    let evoChainURL = allPkmDetails[indexPkm].species.url;
+    let response = await fetch(evoChainURL);
+    let responseToJson = await response.json();
+    let evoChainInfo = responseToJson.evolution_chain.url;
+    let evoResponse = await fetch(evoChainInfo);
+    let evoResponseToJson = await evoResponse.json();
+    let evoChain = evoResponseToJson.chain;
+    let evofirstform = evoChain.species.name;
+    let evofirstformResponse = await fetch(baseUrl + "pokemon/" + evofirstform);
+    let evofirstformResponseToJson = await evofirstformResponse.json();
+    let evofirstformSprite = evofirstformResponseToJson.sprites["front_default"];
+    return evofirstformSprite;
+}
+
+async function loadFinalEvolution(indexPkm) {
+    let evoChainURL = allPkmDetails[indexPkm].species.url;
+    let response = await fetch(evoChainURL);
+    let responseToJson = await response.json();
+    let evoChainInfo = responseToJson.evolution_chain.url;
+    let evoResponse = await fetch(evoChainInfo);
+    let evoResponseToJson = await evoResponse.json();
+    let evoChain = evoResponseToJson.chain;
+    let finalEvo = evoChain.evolves_to[0].evolves_to[0].species.name;
+    let finalEvoResponse = await fetch(baseUrl + "pokemon/" + finalEvo);
+    let finalEvoResponseToJson = await finalEvoResponse.json();
+    let finalEvoSprite = finalEvoResponseToJson.sprites["front_default"];
+    return finalEvoSprite;
+}
+
+function getTemplateInfo(indexPkm) {
+    document.getElementById('dialog-info').innerHTML = getDialogTable(indexPkm);
+}
