@@ -194,36 +194,47 @@ async function replaceThenRenderCards() {
 
 async function getTypeIcons(indexPkm) {
     let typeIcons = "";
+
     for (let iType = 0; iType < allPkmDetails[indexPkm].types.length; iType++) {
         let typeName = allPkmDetails[indexPkm].types[iType].type.name;
-        let pokeTypeIconURL = allPkmDetails[indexPkm].types[iType].type.url
-        let cachedIcon = cachedTypeIcons.find(icon => icon.type === typeName);
-        let pokeTypeIcon = "";
-        if (!cachedIcon) {
-            let response = await fetch(pokeTypeIconURL);
-            let responseToJson = await response.json();
-            let generations = Object.keys(responseToJson.sprites);
-            let generation = "";
-            for (let i in generations) {
-                let game = Object.keys(responseToJson.sprites[generations[i]])[0];
-                if (responseToJson.sprites[generations[i]][game].name_icon !== null) {
-                    generation = Object.keys(responseToJson.sprites)[i];
-                    pokeTypeIcon = responseToJson.sprites[generation][game].name_icon;
-                    break;
-                }
-            }
-            cachedTypeIcons.push({
-                type: typeName,
-                icon: pokeTypeIcon
-            });
-        } else {
-             pokeTypeIcon = cachedIcon.icon;
-        }
+        let typeURL = allPkmDetails[indexPkm].types[iType].type.url;
+        let pokeTypeIcon = await getCachedTypeIcon(typeName, typeURL);
 
-        typeIcons += `
-    <img src="${pokeTypeIcon}"></img>
-    `}
+        typeIcons += `<img src="${pokeTypeIcon}"></img>`;
+    }
+
     return typeIcons;
+}
+
+async function getCachedTypeIcon(typeName, typeURL) {
+    let cachedIcon = cachedTypeIcons.find(icon => icon.type === typeName);
+
+    if (!cachedIcon) {
+        let pokeTypeIcon = await loadTypeIcon(typeURL);
+        cachedTypeIcons.push({
+            type: typeName,
+            icon: pokeTypeIcon
+        });
+        return pokeTypeIcon;
+    }
+
+    return cachedIcon.icon;
+}
+
+async function loadTypeIcon(pokeTypeIconURL) {
+    let response = await fetch(pokeTypeIconURL);
+    let responseToJson = await response.json();
+    let generations = Object.keys(responseToJson.sprites);
+    let generation = "";
+    for (let i in generations) {
+        let game = Object.keys(responseToJson.sprites[generations[i]])[0];
+        if (responseToJson.sprites[generations[i]][game].name_icon !== null) {
+            generation = Object.keys(responseToJson.sprites)[i];
+            pokeTypeIcon = responseToJson.sprites[generation][game].name_icon;
+            break;
+        }
+    }
+    return pokeTypeIcon;
 }
 
 function getAbilities(indexPkm) {
