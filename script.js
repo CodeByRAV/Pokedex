@@ -19,8 +19,7 @@ async function loadAndShowPokemon() {
         await fetchPokemonCardDetails();
     } catch (exceptionVar) {
         console.log("error");
-        getErrorTemplate();
-
+        document.getElementById('pokemon-container').innerHTML = getErrorTemplate();
     } finally {
         hideLoadingSpinner();
     }
@@ -105,14 +104,14 @@ async function filterAndShowNames(filterWord) {
     showLoadingSpinner();
     try {
         if (filterWord.length < 3) {
-            getSearchGuideTemplate();
+            document.getElementById('pokemon-container').innerHTML = getSearchGuideTemplate();
             replaceLoadWithReturnButton();
             return;
         }
         allPkmDetails = [];
         currentNames = allNames.filter(name => name.includes(filterWord.toLowerCase()));
         if (currentNames.length === 0) {
-            getNotFoundTemplate();
+            document.getElementById('pokemon-container').innerHTML = getNotFoundTemplate();
             replaceLoadWithReturnButton();
             return;
         }
