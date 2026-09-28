@@ -98,30 +98,37 @@ function replaceReturnWithLoadButton() {
     document.getElementById('return-to-main-button').classList.add('d-none');
 }
 
+function showSearchMessage(template) {
+    document.getElementById('pokemon-container').innerHTML = template;
+    replaceLoadWithReturnButton();
+}
+
+async function searchPokemon(filterWord) {
+    allPkmDetails = [];
+    currentNames = allNames.filter(name => name.includes(filterWord.toLowerCase()));
+
+    if (currentNames.length === 0) {
+        showSearchMessage(getNotFoundTemplate());
+        return;
+    }
+
+    await replaceThenRenderCards();
+}
+
 async function filterAndShowNames(filterWord) {
     showLoadingSpinner();
     try {
         if (filterWord.length < 3) {
-            document.getElementById('pokemon-container').innerHTML = getSearchGuideTemplate();
-            replaceLoadWithReturnButton();
+            showSearchMessage(getSearchGuideTemplate());
             return;
         }
-        allPkmDetails = [];
-        currentNames = allNames.filter(name => name.includes(filterWord.toLowerCase()));
-        if (currentNames.length === 0) {
-            document.getElementById('pokemon-container').innerHTML = getNotFoundTemplate();
-            replaceLoadWithReturnButton();
-            return;
-        }
-        await replaceThenRenderCards();
-    } catch (exceptionVar) {
-        console.log("error");
-        getErrorTemplate();
-        replaceLoadWithReturnButton();
+
+        await searchPokemon(filterWord);
     } finally {
         hideLoadingSpinner();
     }
 }
+
 async function loadMorePokemon() {
     showLoadingSpinner();
     try {
@@ -129,20 +136,24 @@ async function loadMorePokemon() {
         let response = await fetch(baseUrl + `pokemon?limit=20&offset=${currentCount}`);
         let responseToJson = await response.json();
         allPkm.push(...responseToJson.results);
-
         for (let indexPkm = currentCount; indexPkm < allPkm.length; indexPkm++) {
-            let pokeName = formatPokemonName(allPkm[indexPkm].name);
-            let response = await fetch(allPkm[indexPkm].url)
+            let response = await fetch(allPkm[indexPkm].url);
             let responseToJson = await response.json();
             allPkmDetails.push(responseToJson);
-            document.getElementById('pokemon-container').innerHTML += await getTemplatePokemonCard(indexPkm, pokeName);
         }
-    } catch (exceptionVar) {
-        console.log("error");
-    } finally {
+        await renderNewPokemonCards(currentCount);
+    }  finally {
         hideLoadingSpinner();
     }
     document.getElementById('load-more-button').classList.remove('d-none');
+}
+
+async function renderNewPokemonCards(currentCount) {
+    for (let indexPkm = currentCount; indexPkm < allPkm.length; indexPkm++) {
+        let pokeName = formatPokemonName(allPkm[indexPkm].name);
+        document.getElementById('pokemon-container').innerHTML +=
+            await getTemplatePokemonCard(indexPkm, pokeName);
+    }
 }
 
 function showPreviousPokeDialog() {
