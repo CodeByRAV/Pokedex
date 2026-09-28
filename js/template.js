@@ -47,7 +47,7 @@ async function getTemplatePokemonDialog(indexPkm, pokeName) {
                 </div>
                 <div class="pokemon-dialog-tabs">
                     <button onclick="getTemplateInfo(${indexPkm})">Main</button>
-                    <button onclick="getTemplateEvo(${indexPkm})">Evolutions</button>
+                    <button onclick="showEvolutions(${indexPkm})">Evolutions</button>
                 </div> 
                 <div id="dialog-info">
                 ${await getDialogTable(indexPkm)}
@@ -63,11 +63,8 @@ async function getTemplatePokemonDialog(indexPkm, pokeName) {
             </div>`;
 }
 
-async function getTemplateEvo(indexPkm) {
-    let secondEvo = await loadEvolvedPokemon(indexPkm);
-    let firstEvo = await loadEvolvedFrom(indexPkm);
-    let finalEvo = await loadFinalEvolution(indexPkm);
-    document.getElementById('dialog-info').innerHTML = `
+function getTemplateEvo(secondEvo, firstEvo, finalEvo) {
+    return `
     <div class="evolution-chain">
         <div class="evolution-chain-cards">
         <img src="${firstEvo}"></img>

@@ -202,7 +202,6 @@ async function getTypeIcons(indexPkm) {
 
         typeIcons += `<img src="${pokeTypeIcon}"></img>`;
     }
-
     return typeIcons;
 }
 
@@ -299,4 +298,11 @@ async function loadFinalEvolution(indexPkm) {
 
 function getTemplateInfo(indexPkm) {
     document.getElementById('dialog-info').innerHTML = getDialogTable(indexPkm);
+}
+
+async function showEvolutions(indexPkm) {
+    let secondEvo = await loadEvolvedPokemon(indexPkm);
+    let firstEvo = await loadEvolvedFrom(indexPkm);
+    let finalEvo = await loadFinalEvolution(indexPkm);
+    document.getElementById('dialog-info').innerHTML = getTemplateEvo(secondEvo, firstEvo, finalEvo);
 }
