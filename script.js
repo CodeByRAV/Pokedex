@@ -5,6 +5,7 @@ let noPLimit = "pokemon?limit=100000&offset=0";
 let allNames = [];
 let currentNames = [];
 let currentDialogIndex = 0;
+let cachedTypeIcons = [];
 const baseUrl = "https://pokeapi.co/api/v2/"
 
 async function init() {
@@ -84,6 +85,7 @@ async function renderPokemonCards() {
         allCards += await getTemplatePokemonCard(indexPkm, pokeName);
     }
     document.getElementById('pokemon-container').innerHTML = allCards;
+    console.log(allPkmDetails);
 }
 
 function replaceLoadWithReturnButton() {
@@ -176,8 +178,8 @@ async function replaceThenRenderCards() {
     let allReplacedCards = '';
     document.getElementById('pokemon-container').innerHTML = '';
     for (let indexPkm = 0; indexPkm < currentNames.length; indexPkm++) {
-    let cachedPokemon = allPkmDetails.find(pokemon => pokemon.name === currentNames[indexPkm]);
-    let pokeName = formatPokemonName(currentNames[indexPkm]);
+        let cachedPokemon = allPkmDetails.find(pokemon => pokemon.name === currentNames[indexPkm]);
+        let pokeName = formatPokemonName(currentNames[indexPkm]);
         if (!cachedPokemon) {
             let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${currentNames[indexPkm]}`)
             let responseToJson = await response.json();
@@ -193,20 +195,31 @@ async function replaceThenRenderCards() {
 async function getTypeIcons(indexPkm) {
     let typeIcons = "";
     for (let iType = 0; iType < allPkmDetails[indexPkm].types.length; iType++) {
+        let typeName = allPkmDetails[indexPkm].types[iType].type.name;
         let pokeTypeIconURL = allPkmDetails[indexPkm].types[iType].type.url
-        let response = await fetch(pokeTypeIconURL);
-        let responseToJson = await response.json();
-        let generations = Object.keys(responseToJson.sprites);
-        let generation = "";
+        let cachedIcon = cachedTypeIcons.find(icon => icon.type === typeName);
         let pokeTypeIcon = "";
-        for (let i in generations) {
-            let game = Object.keys(responseToJson.sprites[generations[i]])[0];
-            if (responseToJson.sprites[generations[i]][game].name_icon !== null) {
-                generation = Object.keys(responseToJson.sprites)[i];
-                pokeTypeIcon = responseToJson.sprites[generation][game].name_icon;
-                break;
+        if (!cachedIcon) {
+            let response = await fetch(pokeTypeIconURL);
+            let responseToJson = await response.json();
+            let generations = Object.keys(responseToJson.sprites);
+            let generation = "";
+            for (let i in generations) {
+                let game = Object.keys(responseToJson.sprites[generations[i]])[0];
+                if (responseToJson.sprites[generations[i]][game].name_icon !== null) {
+                    generation = Object.keys(responseToJson.sprites)[i];
+                    pokeTypeIcon = responseToJson.sprites[generation][game].name_icon;
+                    break;
+                }
             }
+            cachedTypeIcons.push({
+                type: typeName,
+                icon: pokeTypeIcon
+            });
+        } else {
+             pokeTypeIcon = cachedIcon.icon;
         }
+
         typeIcons += `
     <img src="${pokeTypeIcon}"></img>
     `}
