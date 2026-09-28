@@ -6,6 +6,8 @@ let allNames = [];
 let currentNames = [];
 let currentDialogIndex = 0;
 let cachedTypeIcons = [];
+let savedPkm = [];
+let savedPkmDetails = [];
 const baseUrl = "https://pokeapi.co/api/v2/"
 
 async function init() {
@@ -100,6 +102,9 @@ function showSearchMessage(template) {
 }
 
 async function searchPokemon(filterWord) {
+    savedPkm = allPkm;
+    savedPkmDetails = allPkmDetails;
+    allPkm = [];
     allPkmDetails = [];
     currentNames = allNames.filter(name => name.includes(filterWord.toLowerCase()));
 
@@ -138,7 +143,7 @@ async function loadMorePokemon() {
             allPkmDetails.push(responseToJson);
         }
         await renderNewPokemonCards(currentCount);
-    }  finally {
+    } finally {
         hideLoadingSpinner();
     }
     document.getElementById('load-more-button').classList.remove('d-none');
@@ -171,14 +176,11 @@ function showNextPokeDialog() {
 }
 
 async function returnToMain() {
-    console.log(allPkmDetails);
-    allPkmDetails = [];
-    document.getElementById('pokemon-container').innerHTML = ''
-
-    await loadPokemon(pokemon);
-    await fetchPokemonCardDetails();
-    document.getElementById('load-more-button').classList.remove('d-none');
-    document.getElementById('return-to-main-button').classList.add('d-none');
+    allPkm = savedPkm;
+    allPkmDetails = savedPkmDetails;
+    document.getElementById('pokemon-container').innerHTML = '';
+    await renderPokemonCards();
+    replaceReturnWithLoadButton();
 }
 
 async function replaceThenRenderCards() {
