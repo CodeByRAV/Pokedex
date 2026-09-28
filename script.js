@@ -25,6 +25,7 @@ async function loadAndShowPokemon() {
     } finally {
         hideLoadingSpinner();
     }
+    document.getElementById('load-more-button').classList.remove('d-none');
 }
 
 function showLoadingSpinner() {
@@ -41,7 +42,6 @@ function showLoadingSpinner() {
 
 function hideLoadingSpinner() {
     document.getElementById('spinner').classList.add('d-none');
-    document.getElementById('load-more-button').classList.remove('d-none');
     document.body.classList.remove('no-scroll');
 }
 
@@ -82,22 +82,39 @@ function renderNames() {
     }
 }
 
+function replaceLoadWithReturnButton() {
+    document.getElementById('load-more-button').classList.add('d-none');
+    document.getElementById('return-to-main-button').classList.remove('d-none');
+}
+
+function replaceReturnWithLoadButton() {
+    document.getElementById('load-more-button').classList.remove('d-none');
+    document.getElementById('return-to-main-button').classList.add('d-none');
+}
+
 async function filterAndShowNames(filterWord) {
-    if (filterWord.length < 3) {
-        getSearchGuideTemplate();
-        document.getElementById('load-more-button').classList.add('d-none');
-        document.getElementById('return-to-main-button').classList.remove('d-none');
-        return;
+    showLoadingSpinner();
+    try {
+        if (filterWord.length < 3) {
+            getSearchGuideTemplate();
+            replaceLoadWithReturnButton();
+            return;
+        }
+        allPkmDetails = [];
+        currentNames = allNames.filter(name => name.includes(filterWord.toLowerCase()));
+        if (currentNames.length === 0) {
+            getNotFoundTemplate();
+            replaceLoadWithReturnButton();
+            return;
+        }
+        await replaceThenRenderCards();
+    } catch (exceptionVar) {
+        console.log("error");
+        getErrorTemplate();
+        replaceLoadWithReturnButton();
+    } finally {
+        hideLoadingSpinner();
     }
-    allPkmDetails = [];
-    currentNames = allNames.filter(name => name.includes(filterWord.toLowerCase()));
-    if (currentNames.length === 0) {
-        getNotFoundTemplate();
-        document.getElementById('load-more-button').classList.add('d-none');
-        document.getElementById('return-to-main-button').classList.remove('d-none');
-        return;
-    }
-    replaceThenRenderCards();
 }
 async function loadMorePokemon() {
     showLoadingSpinner();
@@ -119,6 +136,7 @@ async function loadMorePokemon() {
     } finally {
         hideLoadingSpinner();
     }
+    document.getElementById('load-more-button').classList.remove('d-none');
 }
 
 function showPreviousPokeDialog() {
