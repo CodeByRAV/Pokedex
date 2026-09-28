@@ -1,7 +1,7 @@
 const dialogRef = document.getElementById("pokemon-dialog");
 
 function openDialog() {
-    document.documentElement.style.position = 'fixed';
+    document.body.classList.add('no-scroll');
     dialogRef.showModal();
     dialogRef.classList.add("opened");
 }
@@ -10,7 +10,7 @@ function closeDialog(event) {
     dialogRef.close();
     dialogRef.classList.remove("opened");
     event.stopPropagation();
-    document.documentElement.style.position = 'inherit';
+    document.body.classList.remove('no-scroll');
 }
 
 function stopProp(event){
