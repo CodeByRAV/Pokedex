@@ -22,7 +22,6 @@ async function loadAndShowPokemon() {
         await fetchPokemonCardDetails();
         replaceReturnWithLoadButton();
     } catch (exceptionVar) {
-        console.log("error");
         document.getElementById('pokemon-container').innerHTML = getErrorTemplate();
         replaceLoadWithReturnButton();
     } finally {
@@ -33,7 +32,6 @@ async function loadAndShowPokemon() {
 
 function showLoadingSpinner() {
     document.getElementById('spinner').classList.remove('d-none');
-    console.log(document.getElementById('spinner'));
     document.getElementById('load-more-button').classList.add('d-none');
     document.getElementById('spinner').innerHTML = getTemplateSpinner();
     document.body.classList.add('no-scroll');
@@ -83,7 +81,6 @@ async function renderPokemonCards() {
         allCards += await getTemplatePokemonCard(indexPkm, pokeName);
     }
     document.getElementById('pokemon-container').innerHTML = allCards;
-    console.log(allPkmDetails);
 }
 
 function replaceLoadWithReturnButton() {
