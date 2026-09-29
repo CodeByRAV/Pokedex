@@ -116,6 +116,8 @@ async function searchPokemon(filterWord) {
 async function filterAndShowNames(filterWord) {
     showLoadingSpinner();
     try {
+        savedPkm = allPkm;
+        savedPkmDetails = allPkmDetails;
         if (filterWord.length < 3) {
             showSearchMessage(getSearchGuideTemplate());
             return;
