@@ -12,4 +12,7 @@
     #search-input {
         width: 160px;
     }
+    .poke-img-dialog img {
+        height: 180px;
+    }
 }
