@@ -120,8 +120,10 @@ async function filterAndShowNames(filterWord) {
             showSearchMessage(getSearchGuideTemplate());
             return;
         }
-
         await searchPokemon(filterWord);
+    } catch (exceptionVar) {
+        document.getElementById('pokemon-container').innerHTML = getErrorTemplate();
+        replaceLoadWithReturnButton();
     } finally {
         hideLoadingSpinner();
     }
@@ -140,6 +142,9 @@ async function loadMorePokemon() {
             allPkmDetails.push(responseToJson);
         }
         await renderNewPokemonCards(currentCount);
+    } catch (exceptionVar) {
+        document.getElementById('pokemon-container').innerHTML = getErrorTemplate();
+        replaceLoadWithReturnButton();
     } finally {
         hideLoadingSpinner();
     }
